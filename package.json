@@ -1,0 +1,34 @@
+{
+  "name": "css-selector-extract",
+  "description": "",
+  "keywords": [
+    "CSS"
+  ],
+  "version": "0.0.1",
+  "author": "Markus Oberlehner",
+  "homepage": "https://github.com/maoberlehner/css-selector-extract",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maoberlehner/css-selector-extract"
+  },
+  "bugs": {
+    "url": "https://github.com/maoberlehner/css-selector-extract/issues"
+  },
+  "dependencies": {
+    "postcss": "^5.0.21",
+    "postcss-scss": "^0.1.8"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.2",
+    "rollup": "^0.31.2",
+    "rollup-plugin-buble": "^0.11.0",
+    "rollup-plugin-commonjs": "^3.0.0",
+    "rollup-plugin-node-resolve": "^1.7.0"
+  },
+  "scripts": {
+    "scripts:bundle": "rollup --config --format cjs --name CssSelectorExtract --output dist/index.js js/index.js",
+    "scripts:lint": "jshint js/index.js || exit 0",
+    "scripts": "npm run scripts:bundle && npm run scripts:lint"
+  }
+}
