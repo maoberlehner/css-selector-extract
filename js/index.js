@@ -8,32 +8,24 @@ import postcss from 'postcss';
 import postcssScss from 'postcss-scss';
 
 export default class CssSelectorExtract {
-  constructor(options = {}) {
+  process(css, selectors, replacementSelectors) {
+    return new Promise((resolve, reject) => {
+      let css = this.processSync(css, selectors, replacementSelectors);
+      resolve(css);
+    });
   }
 
-  process(contents, selectors, selectorReplacements) {
+  processSync(css, selectors, replacementSelectors) {
     return postcss(postcss.plugin('postcss-extract-selectors', (options) => {
-      const searchSelectorFilters = [];
-      const replacementSelectorFilters = [];
-      // Split the selector filters in tow arrays, one array with selectors to
-      // search for and the other array with replacements for the filtered
-      // selectors.
-      selectorFilters.forEach((selectorFilter) => {
-        let searchSelector = selectorFilter[0];
-        let replacementSelector = selectorFilter[1];
-        searchSelectorFilters.push(searchSelector);
-        replacementSelectorFilters.push(replacementSelector || searchSelector);
-      });
-
-      return (css) => {
-        css.walkRules((rule) => {
+      return (cssNodes) => {
+        cssNodes.walkRules((rule) => {
           // Split combined selectors into an array.
           let ruleSelectors = rule.selector.split(',').map((ruleSelector) => ruleSelector.replace(/(\r\n|\n|\r)/gm, '').trim());
           // Find whitelisted selectors and remove others.
           ruleSelectors.forEach((ruleSelector, index) => {
-            let selectorFilterIndex = searchSelectorFilters.indexOf(ruleSelector);
+            let selectorFilterIndex = selectors.indexOf(ruleSelector);
             if (selectorFilterIndex != -1) {
-              ruleSelectors[index] = replacementSelectorFilters[selectorFilterIndex];
+              ruleSelectors[index] = replacementSelectors[ruleSelector];
             } else {
               // Set an empty value for the selector to mark it for deletion.
               ruleSelectors[index] = '';
@@ -49,6 +41,6 @@ export default class CssSelectorExtract {
           }
         });
       };
-    })).process(contents, { syntax: postcssScss }).css;
+    })).process(css, { syntax: postcssScss }).css;
   }
 }
