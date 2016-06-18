@@ -2,8 +2,6 @@
  * css-selector-extract
  * @author Markus Oberlehner
  */
-'use strict';
-
 import postcss from 'postcss';
 import postcssScss from 'postcss-scss';
 
