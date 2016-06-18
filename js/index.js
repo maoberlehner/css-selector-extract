@@ -10,13 +10,17 @@ import postcssScss from 'postcss-scss';
 export default class CssSelectorExtract {
   process(css, selectors, replacementSelectors) {
     return new Promise((resolve, reject) => {
-      let css = this.processSync(css, selectors, replacementSelectors);
-      resolve(css);
+      let result = this.processSync(css, selectors, replacementSelectors);
+      resolve(result);
     });
   }
 
   processSync(css, selectors, replacementSelectors) {
-    return postcss(postcss.plugin('postcss-extract-selectors', (options) => {
+    return postcss(this._postcssSelectorExtract(selectors, replacementSelectors)).process(css, { syntax: postcssScss }).css;
+  }
+
+  _postcssSelectorExtract(selectors, replacementSelectors) {
+    return postcss.plugin('postcss-extract-selectors', (options) => {
       return (cssNodes) => {
         cssNodes.walkRules((rule) => {
           // Split combined selectors into an array.
@@ -24,9 +28,9 @@ export default class CssSelectorExtract {
           // Find whitelisted selectors and remove others.
           ruleSelectors.forEach((ruleSelector, index) => {
             let selectorFilterIndex = selectors.indexOf(ruleSelector);
-            if (selectorFilterIndex != -1) {
-              ruleSelectors[index] = replacementSelectors[ruleSelector];
-            } else {
+            // Replace the selector if a replacement selector is defined.
+            ruleSelectors[index] = replacementSelectors[ruleSelector] || ruleSelectors[index];
+            if (selectorFilterIndex == -1) {
               // Set an empty value for the selector to mark it for deletion.
               ruleSelectors[index] = '';
             }
@@ -41,6 +45,6 @@ export default class CssSelectorExtract {
           }
         });
       };
-    })).process(css, { syntax: postcssScss }).css;
+    });
   }
 }
