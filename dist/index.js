@@ -49,4 +49,6 @@ CssSelectorExtract.prototype._postcssSelectorExtract = function _postcssSelector
   });
 };
 
-module.exports = CssSelectorExtract;
+var index = new CssSelectorExtract();
+
+module.exports = index;
