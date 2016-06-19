@@ -5,7 +5,7 @@
 import postcss from 'postcss';
 import postcssScss from 'postcss-scss';
 
-export default class CssSelectorExtract {
+class CssSelectorExtract {
   process(css, selectors, replacementSelectors) {
     return new Promise((resolve, reject) => {
       let result = this.processSync(css, selectors, replacementSelectors);
@@ -46,3 +46,5 @@ export default class CssSelectorExtract {
     });
   }
 }
+
+export default new CssSelectorExtract();
