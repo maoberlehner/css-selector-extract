@@ -32,10 +32,10 @@
     "scripts:lint": "jshint js/index.js",
     "scripts:lint-no-error": "jshint js/index.js || exit 0",
     "scripts": "npm run scripts:bundle && npm run scripts:lint-no-error",
-    "precommit-msg": "echo 'Pre-commit checks...' && exit 0",
+    "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
   },
   "pre-commit": [
     "precommit-msg",
-    "styles:lint"
+    "scripts:lint"
   ]
 }
