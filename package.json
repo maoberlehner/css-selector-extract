@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "jshint": "^2.9.2",
+    "pre-commit": "^1.1.3",
     "rollup": "^0.31.2",
     "rollup-plugin-buble": "^0.11.0"
   },
@@ -28,7 +29,13 @@
   "jsnext:main": "js/index.js",
   "scripts": {
     "scripts:bundle": "rollup --config --format cjs --output dist/index.js js/index.js",
-    "scripts:lint": "jshint js/index.js || exit 0",
-    "scripts": "npm run scripts:bundle && npm run scripts:lint"
-  }
+    "scripts:lint": "jshint js/index.js",
+    "scripts:lint-no-error": "jshint js/index.js || exit 0",
+    "scripts": "npm run scripts:bundle && npm run scripts:lint-no-error",
+    "precommit-msg": "echo 'Pre-commit checks...' && exit 0",
+  },
+  "pre-commit": [
+    "precommit-msg",
+    "styles:lint"
+  ]
 }
