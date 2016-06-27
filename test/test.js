@@ -28,7 +28,7 @@ describe('CssSelectorExtract', function() {
 }`);
     });
 
-    it('correct way to extract nested selector (CSS): returns empty string', function() {
+    it('wrong way to extract nested selector (CSS): returns empty string', function() {
       var selectors = ['.test2'];
       var extractCss = cssSelectorExtract.processSync(css, selectors).trim();
       expect(extractCss).to.equal('');
