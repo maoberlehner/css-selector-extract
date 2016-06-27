@@ -47,6 +47,12 @@ CssSelectorExtract.prototype._postcssSelectorExtract = function _postcssSelector
           rule.remove();
         }
       });
+      cssNodes.walkAtRules(function (rule) {
+        // Remove empty @ rules.
+        if (!rule.nodes.length) {
+          rule.remove();
+        }
+      });
     };
   });
 };

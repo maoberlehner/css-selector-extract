@@ -42,6 +42,12 @@ class CssSelectorExtract {
             rule.remove();
           }
         });
+        cssNodes.walkAtRules((rule) => {
+          // Remove empty @ rules.
+          if (!rule.nodes.length) {
+            rule.remove();
+          }
+        });
       };
     });
   }
