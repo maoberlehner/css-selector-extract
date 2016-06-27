@@ -21,6 +21,8 @@ CssSelectorExtract.prototype.processSync = function processSync(css, selectors, 
 };
 
 CssSelectorExtract.prototype._postcssSelectorExtract = function _postcssSelectorExtract(selectors, replacementSelectors) {
+    if ( replacementSelectors === void 0 ) replacementSelectors = {};
+
   return postcss.plugin('postcss-extract-selectors', function (options) {
     return function (cssNodes) {
       cssNodes.walkRules(function (rule) {
