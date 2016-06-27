@@ -21,6 +21,8 @@ CssSelectorExtract.prototype.processSync = function processSync(css, selectors, 
 };
 
 CssSelectorExtract.prototype._postcssSelectorExtract = function _postcssSelectorExtract(selectors, replacementSelectors) {
+    if ( replacementSelectors === void 0 ) replacementSelectors = {};
+
   return postcss.plugin('postcss-extract-selectors', function (options) {
     return function (cssNodes) {
       cssNodes.walkRules(function (rule) {
@@ -42,6 +44,12 @@ CssSelectorExtract.prototype._postcssSelectorExtract = function _postcssSelector
           rule.selector = ruleSelectors.join(',');
         } else {
           // Remove the rule.
+          rule.remove();
+        }
+      });
+      cssNodes.walkAtRules(function (rule) {
+        // Remove empty @ rules.
+        if (!rule.nodes.length) {
           rule.remove();
         }
       });

@@ -17,7 +17,7 @@ class CssSelectorExtract {
     return postcss(this._postcssSelectorExtract(selectors, replacementSelectors)).process(css, { syntax: postcssScss }).css;
   }
 
-  _postcssSelectorExtract(selectors, replacementSelectors) {
+  _postcssSelectorExtract(selectors, replacementSelectors = {}) {
     return postcss.plugin('postcss-extract-selectors', (options) => {
       return (cssNodes) => {
         cssNodes.walkRules((rule) => {
@@ -39,6 +39,12 @@ class CssSelectorExtract {
             rule.selector = ruleSelectors.join(',');
           } else {
             // Remove the rule.
+            rule.remove();
+          }
+        });
+        cssNodes.walkAtRules((rule) => {
+          // Remove empty @ rules.
+          if (!rule.nodes.length) {
             rule.remove();
           }
         });
