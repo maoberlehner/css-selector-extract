@@ -18,7 +18,7 @@ cssSelectorExtract.process(css, selectors).then((css) => {
 });
 
 // Synchronous:
-css = cssSelectorExtract.processSync(css, selectors));
+css = cssSelectorExtract.processSync(css, selectors);
 console.log(css); // Outputs: `.btn { ... }`.
 ```
 
