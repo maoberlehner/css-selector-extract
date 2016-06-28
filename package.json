@@ -16,7 +16,8 @@
     "url": "https://github.com/maoberlehner/css-selector-extract/issues"
   },
   "dependencies": {
-    "postcss": "^5.0.21"
+    "postcss": "^5.0.21",
+    "postcss-scss": "^0.1.8"
   },
   "devDependencies": {
     "chai": "^3.5.0",

@@ -3,6 +3,7 @@
  * @author Markus Oberlehner
  */
 import postcss from 'postcss';
+import postcssScss from 'postcss-scss';
 
 export default class CssSelectorExtract {
   static process(css, selectors, replacementSelectors) {
@@ -13,7 +14,7 @@ export default class CssSelectorExtract {
   }
 
   static processSync(css, selectors, replacementSelectors) {
-    return postcss(this.prototype._postcssSelectorExtract(selectors, replacementSelectors)).process(css).css;
+    return postcss(this.prototype._postcssSelectorExtract(selectors, replacementSelectors)).process(css, { syntax: postcssScss }).css;
   }
 
   _postcssSelectorExtract(selectors, replacementSelectors = {}) {
