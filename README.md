@@ -1,7 +1,5 @@
 # css-selector-extract
-With selector extracting, it is possible to extract only certain CSS selectors
-form (S)CSS code. This is especially useful if you want to extract only a few
-CSS classes from a huge library or framework.
+With selector extracting, it is possible to extract only certain CSS selectors form (S)CSS code. This is especially useful if you want to extract only a few CSS classes from a huge library or framework.
 
 ## Demos
 ```js
