@@ -3,7 +3,6 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var postcss = _interopDefault(require('postcss'));
-var postcssScss = _interopDefault(require('postcss-scss'));
 
 var CssSelectorExtract = function CssSelectorExtract () {};
 
@@ -15,7 +14,7 @@ CssSelectorExtract.process = function process(css, selectors, replacementSelecto
 };
 
 CssSelectorExtract.processSync = function processSync(css, selectors, replacementSelectors) {
-  return postcss(this.prototype._postcssSelectorExtract(selectors, replacementSelectors)).process(css, { syntax: postcssScss }).css;
+  return postcss(this.prototype._postcssSelectorExtract(selectors, replacementSelectors)).process(css).css;
 };
 
 CssSelectorExtract.prototype._postcssSelectorExtract = function _postcssSelectorExtract(selectors, replacementSelectors) {
