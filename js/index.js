@@ -44,7 +44,7 @@ export default class CssSelectorExtract {
         });
         cssNodes.walkAtRules((rule) => {
           // Remove empty @ rules.
-          if (!rule.nodes.length) {
+          if (rule.nodes && !rule.nodes.length) {
             rule.remove();
           }
         });
