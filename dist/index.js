@@ -7,17 +7,15 @@ var postcssScss = _interopDefault(require('postcss-scss'));
 
 var CssSelectorExtract = function CssSelectorExtract () {};
 
-CssSelectorExtract.prototype.process = function process(css, selectors, replacementSelectors) {
-    var this$1 = this;
-
+CssSelectorExtract.process = function process(css, selectors, replacementSelectors) {
   return new Promise(function (resolve, reject) {
-    var result = this$1.processSync(css, selectors, replacementSelectors);
+    var result = CssSelectorExtract.processSync(css, selectors, replacementSelectors);
     resolve(result);
   });
 };
 
-CssSelectorExtract.prototype.processSync = function processSync(css, selectors, replacementSelectors) {
-  return postcss(this._postcssSelectorExtract(selectors, replacementSelectors)).process(css, { syntax: postcssScss }).css;
+CssSelectorExtract.processSync = function processSync(css, selectors, replacementSelectors) {
+  return postcss(this.prototype._postcssSelectorExtract(selectors, replacementSelectors)).process(css, { syntax: postcssScss }).css;
 };
 
 CssSelectorExtract.prototype._postcssSelectorExtract = function _postcssSelectorExtract(selectors, replacementSelectors) {
@@ -57,6 +55,4 @@ CssSelectorExtract.prototype._postcssSelectorExtract = function _postcssSelector
   });
 };
 
-var index = new CssSelectorExtract();
-
-module.exports = index;
+module.exports = CssSelectorExtract;

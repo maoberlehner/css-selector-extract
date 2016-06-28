@@ -5,16 +5,16 @@
 import postcss from 'postcss';
 import postcssScss from 'postcss-scss';
 
-class CssSelectorExtract {
-  process(css, selectors, replacementSelectors) {
+export default class CssSelectorExtract {
+  static process(css, selectors, replacementSelectors) {
     return new Promise((resolve, reject) => {
-      let result = this.processSync(css, selectors, replacementSelectors);
+      let result = CssSelectorExtract.processSync(css, selectors, replacementSelectors);
       resolve(result);
     });
   }
 
-  processSync(css, selectors, replacementSelectors) {
-    return postcss(this._postcssSelectorExtract(selectors, replacementSelectors)).process(css, { syntax: postcssScss }).css;
+  static processSync(css, selectors, replacementSelectors) {
+    return postcss(this.prototype._postcssSelectorExtract(selectors, replacementSelectors)).process(css, { syntax: postcssScss }).css;
   }
 
   _postcssSelectorExtract(selectors, replacementSelectors = {}) {
@@ -52,5 +52,3 @@ class CssSelectorExtract {
     });
   }
 }
-
-export default new CssSelectorExtract();
