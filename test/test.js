@@ -102,4 +102,11 @@ describe('class CssSelectorExtract', function() {
       });
     });
   });
+
+  describe('#_postcssSelectorExtract()', function() {
+    it('returns postcss plugin named "postcss-extract-selectors"', function(){
+      expect(cssSelectorExtract.prototype._postcssSelectorExtract().postcss).to.not.be.undefined;
+      expect(cssSelectorExtract.prototype._postcssSelectorExtract().postcss.postcssPlugin).to.equal('postcss-extract-selectors');
+    });
+  });
 });
