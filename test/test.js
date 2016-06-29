@@ -1,9 +1,25 @@
-describe('CssSelectorExtract', function() {
+describe('class CssSelectorExtract', function() {
   var cssSelectorExtract = require('../');
   var expect = require('chai').expect;
   var fs = require('fs');
 
   var css = fs.readFileSync('test/test.scss').toString();
+
+  it('should be a function', function(){
+    expect(typeof cssSelectorExtract).to.equal('function');
+  });
+
+  it('should have a process method', function(){
+    expect(typeof cssSelectorExtract.process).to.equal('function');
+  });
+
+  it('should have a processSync method', function(){
+    expect(typeof cssSelectorExtract.processSync).to.equal('function');
+  });
+
+  it('should have a prototype._postcssSelectorExtract method', function(){
+    expect(typeof cssSelectorExtract.prototype._postcssSelectorExtract).to.equal('function');
+  });
 
   describe('#process()', function() {
     /**
