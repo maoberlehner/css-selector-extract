@@ -3,7 +3,7 @@ describe('CssSelectorExtract', () => {
   const expect = require('chai').expect;
   const fs = require('fs');
 
-  const css = fs.readFileSync('test/test.scss').toString();
+  const css = fs.readFileSync('test/css/test.scss').toString();
 
   it('should be a function', () => {
     expect(typeof cssSelectorExtract).to.equal('function');
@@ -18,11 +18,10 @@ describe('CssSelectorExtract', () => {
      * .test1
      */
     it('correct way to extract default selector: should return `.test1` selector', () => {
+      let referenceCss = fs.readFileSync('test/css/reference/test1.scss').toString();
       let selectors = ['.test1'];
       return cssSelectorExtract.process(css, selectors).then((extractCss) => {
-        expect(extractCss.trim()).to.equal(`.test1 {
-  content: 'Test 1';
-}`);
+        expect(extractCss.trim()).to.equal(referenceCss.trim());
       });
     });
 
@@ -30,11 +29,10 @@ describe('CssSelectorExtract', () => {
      * .test2
      */
     it('correct way to extract nested selector (CSS): should return `.nested .test2` selector', () => {
+      let referenceCss = fs.readFileSync('test/css/reference/test2.scss').toString();
       let selectors = ['.nested .test2'];
       return cssSelectorExtract.process(css, selectors).then((extractCss) => {
-        expect(extractCss.trim()).to.equal(`.nested .test2 {
-  content: 'Test 2';
-}`);
+        expect(extractCss.trim()).to.equal(referenceCss.trim());
       });
     });
 
@@ -49,13 +47,10 @@ describe('CssSelectorExtract', () => {
      * .test3
      */
     it('correct way to extract nested selector (SCSS): should return `.nested .test3` selector', () => {
+      let referenceCss = fs.readFileSync('test/css/reference/test3.scss').toString();
       let selectors = ['.nested', '.test3'];
       return cssSelectorExtract.process(css, selectors).then((extractCss) => {
-        expect(extractCss.trim()).to.equal(`.nested {
-  .test3 {
-    content: 'Test 3';
-  }
-}`);
+        expect(extractCss.trim()).to.equal(referenceCss.trim());
       });
     });
 
@@ -70,13 +65,10 @@ describe('CssSelectorExtract', () => {
      * .test4
      */
     it('correct way to extract @media nested selector (CSS): should return `@media .test4` selector', () => {
+      let referenceCss = fs.readFileSync('test/css/reference/test4.scss').toString();
       let selectors = ['.test4'];
       return cssSelectorExtract.process(css, selectors).then((extractCss) => {
-        expect(extractCss.trim()).to.equal(`@media (min-width: 30em) {
-  .test4 {
-    content: 'Test 4';
-  }
-}`);
+        expect(extractCss.trim()).to.equal(referenceCss.trim());
       });
     });
 
@@ -84,13 +76,10 @@ describe('CssSelectorExtract', () => {
      * .test5
      */
     it('correct way to extract @media nested selector (SCSS): should return `.test5 @media` selector', () => {
+      let referenceCss = fs.readFileSync('test/css/reference/test5.scss').toString();
       let selectors = ['.test5'];
       return cssSelectorExtract.process(css, selectors).then((extractCss) => {
-        expect(extractCss.trim()).to.equal(`.test5 {
-  @media (min-width: 30em) {
-    content: 'Test 5';
-  }
-}`);
+        expect(extractCss.trim()).to.equal(referenceCss.trim());
       });
     });
   });
