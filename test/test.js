@@ -9,19 +9,11 @@ describe('class CssSelectorExtract', () => {
     expect(typeof cssSelectorExtract).to.equal('function');
   });
 
-  it('should have a process method', () => {
-    expect(typeof cssSelectorExtract.process).to.equal('function');
-  });
-
-  it('should have a processSync method', () => {
-    expect(typeof cssSelectorExtract.processSync).to.equal('function');
-  });
-
-  it('should have a prototype._postcssSelectorExtract method', () => {
-    expect(typeof cssSelectorExtract.prototype._postcssSelectorExtract).to.equal('function');
-  });
-
   describe('#process()', () => {
+    it('should be a function', () => {
+      expect(typeof cssSelectorExtract.process).to.equal('function');
+    });
+
     /**
      * .test1
      */
@@ -103,7 +95,17 @@ describe('class CssSelectorExtract', () => {
     });
   });
 
+  describe('#processSync()', () => {
+    it('should be a function', () => {
+      expect(typeof cssSelectorExtract.processSync).to.equal('function');
+    });
+  });
+
   describe('#_postcssSelectorExtract()', () => {
+    it('should be a function', () => {
+      expect(typeof cssSelectorExtract.prototype._postcssSelectorExtract).to.equal('function');
+    });
+
     it('returns postcss plugin named "postcss-extract-selectors"', () => {
       expect(cssSelectorExtract.prototype._postcssSelectorExtract().postcss).to.not.be.undefined;
       expect(cssSelectorExtract.prototype._postcssSelectorExtract().postcss.postcssPlugin).to.equal('postcss-extract-selectors');
