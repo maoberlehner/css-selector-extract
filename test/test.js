@@ -82,6 +82,18 @@ describe('CssSelectorExtract', () => {
         expect(extractCss.trim()).to.equal(referenceCss.trim());
       });
     });
+
+    /**
+     * .test6
+     */
+    it('selector replacement: should return `.test6-replaced` selector', () => {
+      let referenceCss = fs.readFileSync('test/css/reference/test6.scss').toString();
+      let selectors = ['.test6'];
+      let replacementSelectors = { '.test6': '.test6-replaced' };
+      return cssSelectorExtract.process(css, selectors, replacementSelectors).then((extractCss) => {
+        expect(extractCss.trim()).to.equal(referenceCss.trim());
+      });
+    });
   });
 
   describe('#processSync()', () => {
