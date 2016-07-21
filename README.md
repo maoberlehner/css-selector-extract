@@ -37,6 +37,14 @@ cssSelectorExtract.process(css, selectors, replacementSelectors).then((css) => {
 });
 ```
 
+## Development
+See [CONTRIBUTING.md](https://github.com/maoberlehner/css-selector-extract/blob/master/CONTRIBUTING.md)
+
+### Testing
+```bash
+npm test
+```
+
 ## About
 ### Author
 Markus Oberlehner  
