@@ -14,7 +14,8 @@ export default class CssSelectorExtract {
   }
 
   static processSync(css, selectors, replacementSelectors) {
-    return postcss(this.prototype._postcssSelectorExtract(selectors, replacementSelectors)).process(css, { syntax: postcssScss }).css;
+    let postcssSelectorExtract = this.prototype._postcssSelectorExtract(selectors, replacementSelectors);
+    return postcss(postcssSelectorExtract).process(css, { syntax: postcssScss }).css;
   }
 
   _postcssSelectorExtract(selectors, replacementSelectors = {}) {
