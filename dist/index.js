@@ -15,7 +15,8 @@ CssSelectorExtract.process = function process(css, selectors, replacementSelecto
 };
 
 CssSelectorExtract.processSync = function processSync(css, selectors, replacementSelectors) {
-  return postcss(this.prototype._postcssSelectorExtract(selectors, replacementSelectors)).process(css, { syntax: postcssScss }).css;
+  var postcssSelectorExtract = this.prototype._postcssSelectorExtract(selectors, replacementSelectors);
+  return postcss(postcssSelectorExtract).process(css, { syntax: postcssScss }).css;
 };
 
 CssSelectorExtract.prototype._postcssSelectorExtract = function _postcssSelectorExtract(selectors, replacementSelectors) {
