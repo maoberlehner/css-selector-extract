@@ -1,0 +1,6 @@
+{
+  "extends": "eslint-config-modularis",
+  "rules": {
+    "no-underscore-dangle": 0
+  }
+}
