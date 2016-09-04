@@ -3,38 +3,46 @@ With selector extracting, it is possible to extract certain CSS selectors form (
 
 ## Demos
 ```js
-const cssSelectorExtract = require('css-selector-extract');
+var cssSelectorExtract = require('css-selector-extract');
 
 // CSS source code as string.
-let css = '.btn { ... } .btn-alert { ... } .btn-success { ... }';
+var css = '.btn { ... } .btn-alert { ... } .btn-success { ... }';
 // Array of selectors which should be extracted.
-let selectors = ['.btn'];
+var selectors = ['.btn'];
 
 // Asynchronous:
-cssSelectorExtract.process(css, selectors).then((css) => {
-  console.log(css); // Outputs: `.btn { ... }`.
+cssSelectorExtract.process(css, selectors).then((extractedCss) => {
+  console.log(extractedCss); // Outputs: `.btn { ... }`.
 });
 
 // Synchronous:
-css = cssSelectorExtract.processSync(css, selectors);
-console.log(css); // Outputs: `.btn { ... }`.
+var extractedCss = cssSelectorExtract.processSync(css, selectors);
+console.log(extractedCss); // Outputs: `.btn { ... }`.
 ```
 
 ### Rename extracted selectors
 ```js
-const cssSelectorExtract = require('css-selector-extract');
+var cssSelectorExtract = require('css-selector-extract');
 
 // CSS source code as string.
-let css = '.btn { ... } .btn-alert { ... } .btn-success { ... }';
+var css = '.btn { ... } .btn-alert { ... } .btn-success { ... }';
 // Array of selectors which should be extracted.
-let selectors = ['.btn'];
+var selectors = ['.btn'];
 // Define replacements for extracted selectors.
-let replacementSelectors = { '.btn': '.button' };
+var replacementSelectors = { '.btn': '.button' };
 
 // Asynchronous:
-cssSelectorExtract.process(css, selectors, replacementSelectors).then((css) => {
-  console.log(css); // Outputs: `.button { ... }`.
+cssSelectorExtract.process(css, selectors, replacementSelectors).then((extractedCss) => {
+  console.log(extractedCss); // Outputs: `.button { ... }`.
 });
+```
+
+## Development
+See [CONTRIBUTING.md](https://github.com/maoberlehner/css-selector-extract/blob/master/CONTRIBUTING.md)
+
+### Testing
+```bash
+npm test
 ```
 
 ## About
@@ -43,4 +51,4 @@ Markus Oberlehner
 Twitter: https://twitter.com/MaOberlehner
 
 ### License
-GPL v2 (http://www.gnu.org/licenses/gpl-2.0.html)
+MIT

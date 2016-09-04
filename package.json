@@ -4,7 +4,7 @@
   "keywords": [
     "CSS"
   ],
-  "version": "0.3.5",
+  "version": "0.3.6",
   "author": "Markus Oberlehner",
   "homepage": "https://github.com/maoberlehner/css-selector-extract",
   "license": "MIT",
@@ -21,7 +21,9 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "jshint": "^2.9.2",
+    "eslint": "^3.1.1",
+    "eslint-config-modularis": "^0.2.0",
+    "eslint-plugin-import": "^1.12.0",
     "mocha": "^2.5.3",
     "pre-git": "^3.10.0",
     "rollup": "^0.31.2",
@@ -31,8 +33,8 @@
   "jsnext:main": "js/index.js",
   "scripts": {
     "scripts:bundle": "rollup --config --format cjs --output dist/index.js js/index.js",
-    "scripts:lint": "jshint js/index.js",
-    "scripts:lint-no-error": "jshint js/index.js || exit 0",
+    "scripts:lint": "eslint js/* test/*",
+    "scripts:lint-no-error": "eslint js/* test/* || exit 0",
     "scripts": "npm run scripts:bundle && npm run scripts:lint-no-error",
     "test": "mocha"
   },
