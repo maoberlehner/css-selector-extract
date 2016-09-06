@@ -11,7 +11,10 @@ describe('CssSelectorExtract', () => {
     expect(typeof cssSelectorExtract).to.equal('function');
   });
 
-  describe('#process()', () => {
+  /**
+   * process()
+   */
+  describe('process()', () => {
     it('should be a function', () => {
       expect(typeof cssSelectorExtract.process).to.equal('function');
     });
@@ -98,13 +101,19 @@ describe('CssSelectorExtract', () => {
     });
   });
 
-  describe('#processSync()', () => {
+  /**
+   * processSync()
+   */
+  describe('processSync()', () => {
     it('should be a function', () => {
       expect(typeof cssSelectorExtract.processSync).to.equal('function');
     });
   });
 
-  describe('#postcssSelectorExtract()', () => {
+  /**
+   * postcssSelectorExtract()
+   */
+  describe('postcssSelectorExtract()', () => {
     it('should be a function', () => {
       expect(typeof cssSelectorExtract.prototype.postcssSelectorExtract).to.equal('function');
     });
