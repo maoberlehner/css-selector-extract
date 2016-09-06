@@ -104,16 +104,16 @@ describe('CssSelectorExtract', () => {
     });
   });
 
-  describe('#_postcssSelectorExtract()', () => {
+  describe('#postcssSelectorExtract()', () => {
     it('should be a function', () => {
-      expect(typeof cssSelectorExtract.prototype._postcssSelectorExtract).to.equal('function');
+      expect(typeof cssSelectorExtract.prototype.postcssSelectorExtract).to.equal('function');
     });
 
     it('should return a postcss plugin named "postcss-extract-selectors"', () => {
       // eslint-disable-next-line no-unused-expressions
-      expect(cssSelectorExtract.prototype._postcssSelectorExtract().postcss)
+      expect(cssSelectorExtract.prototype.postcssSelectorExtract().postcss)
         .to.not.be.undefined;
-      expect(cssSelectorExtract.prototype._postcssSelectorExtract().postcss.postcssPlugin)
+      expect(cssSelectorExtract.prototype.postcssSelectorExtract().postcss.postcssPlugin)
         .to.equal('postcss-extract-selectors');
     });
   });

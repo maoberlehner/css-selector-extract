@@ -14,14 +14,14 @@ export default class CssSelectorExtract {
   }
 
   static processSync(css, selectors, replacementSelectors) {
-    const postcssSelectorExtract = this.prototype._postcssSelectorExtract(
+    const postcssSelectorExtract = this.prototype.postcssSelectorExtract(
       selectors,
       replacementSelectors
     );
     return postcss(postcssSelectorExtract).process(css, { syntax: postcssScss }).css;
   }
 
-  _postcssSelectorExtract(selectors, replacementSelectors = {}) {
+  postcssSelectorExtract(selectors, replacementSelectors = {}) {
     return postcss.plugin('postcss-extract-selectors', () => (cssNodes) => {
       cssNodes.walkRules((rule) => {
         // Split combined selectors into an array.

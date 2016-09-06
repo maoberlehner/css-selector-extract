@@ -7,22 +7,22 @@ var postcssScss = _interopDefault(require('postcss-scss'));
 
 var CssSelectorExtract = function CssSelectorExtract () {};
 
-CssSelectorExtract.process = function process(css, selectors, replacementSelectors) {
+CssSelectorExtract.process = function process (css, selectors, replacementSelectors) {
   return new Promise(function (resolve) {
     var result = CssSelectorExtract.processSync(css, selectors, replacementSelectors);
     resolve(result);
   });
 };
 
-CssSelectorExtract.processSync = function processSync(css, selectors, replacementSelectors) {
-  var postcssSelectorExtract = this.prototype._postcssSelectorExtract(
+CssSelectorExtract.processSync = function processSync (css, selectors, replacementSelectors) {
+  var postcssSelectorExtract = this.prototype.postcssSelectorExtract(
     selectors,
     replacementSelectors
   );
   return postcss(postcssSelectorExtract).process(css, { syntax: postcssScss }).css;
 };
 
-CssSelectorExtract.prototype._postcssSelectorExtract = function _postcssSelectorExtract(selectors, replacementSelectors) {
+CssSelectorExtract.prototype.postcssSelectorExtract = function postcssSelectorExtract (selectors, replacementSelectors) {
     if ( replacementSelectors === void 0 ) replacementSelectors = {};
 
   return postcss.plugin('postcss-extract-selectors', function () { return function (cssNodes) {
