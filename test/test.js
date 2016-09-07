@@ -5,7 +5,8 @@ const expect = require('chai').expect;
 const fs = require('fs');
 
 describe('CssSelectorExtract', () => {
-  const css = fs.readFileSync('test/css/test.scss', { encoding: 'utf8' });
+  const css = fs.readFileSync('test/css/test.css', { encoding: 'utf8' });
+  const scss = fs.readFileSync('test/css/test.scss', { encoding: 'utf8' });
 
   it('should be a function', () => {
     expect(typeof cssSelectorExtract).to.equal('function');
@@ -22,8 +23,8 @@ describe('CssSelectorExtract', () => {
     /**
      * .test1
      */
-    it('correct way to extract default selector: should return `.test1` selector', () => {
-      const referenceCss = fs.readFileSync('test/css/reference/test1.scss', { encoding: 'utf8' });
+    it('CSS: correct way to extract default selector - should return `.test1` selector', () => {
+      const referenceCss = fs.readFileSync('test/css/reference/test1.css', { encoding: 'utf8' });
       const selectors = ['.test1'];
       return cssSelectorExtract.process(css, selectors).then((extractCss) => {
         expect(extractCss.trim()).to.equal(referenceCss.trim());
@@ -33,15 +34,15 @@ describe('CssSelectorExtract', () => {
     /**
      * .test2
      */
-    it('correct way to extract nested selector (CSS): should return `.nested .test2` selector', () => { // eslint-disable-line max-len
-      const referenceCss = fs.readFileSync('test/css/reference/test2.scss', { encoding: 'utf8' });
+    it('CSS: correct way to extract nested selector - should return `.nested .test2` selector', () => { // eslint-disable-line max-len
+      const referenceCss = fs.readFileSync('test/css/reference/test2.css', { encoding: 'utf8' });
       const selectors = ['.nested .test2'];
       return cssSelectorExtract.process(css, selectors).then((extractCss) => {
         expect(extractCss.trim()).to.equal(referenceCss.trim());
       });
     });
 
-    it('wrong way to extract nested selector (CSS): should return empty string', () => {
+    it('CSS: wrong way to extract nested selector - should return empty string', () => {
       const selectors = ['.test2'];
       return cssSelectorExtract.process(css, selectors).then((extractCss) => {
         expect(extractCss.trim()).to.equal('');
@@ -51,52 +52,53 @@ describe('CssSelectorExtract', () => {
     /**
      * .test3
      */
-    it('correct way to extract nested selector (SCSS): should return `.nested .test3` selector', () => { // eslint-disable-line max-len
-      const referenceCss = fs.readFileSync('test/css/reference/test3.scss', { encoding: 'utf8' });
-      const selectors = ['.nested', '.test3'];
-      return cssSelectorExtract.process(css, selectors).then((extractCss) => {
-        expect(extractCss.trim()).to.equal(referenceCss.trim());
-      });
-    });
-
-    it('wrong way to extract nested selector (SCSS): should return empty string', () => {
+    it('CSS: correct way to extract @media nested selector - should return `@media .test3` selector', () => { // eslint-disable-line max-len
+      const referenceCss = fs.readFileSync('test/css/reference/test3.css', { encoding: 'utf8' });
       const selectors = ['.test3'];
       return cssSelectorExtract.process(css, selectors).then((extractCss) => {
-        expect(extractCss.trim()).to.equal('');
+        expect(extractCss.trim()).to.equal(referenceCss.trim());
       });
     });
 
     /**
      * .test4
      */
-    it('correct way to extract @media nested selector (CSS): should return `@media .test4` selector', () => { // eslint-disable-line max-len
-      const referenceCss = fs.readFileSync('test/css/reference/test4.scss', { encoding: 'utf8' });
+    it('CSS: selector replacement - should return `.test4-replaced` selector', () => {
+      const referenceCss = fs.readFileSync('test/css/reference/test4.css', { encoding: 'utf8' });
       const selectors = ['.test4'];
-      return cssSelectorExtract.process(css, selectors).then((extractCss) => {
-        expect(extractCss.trim()).to.equal(referenceCss.trim());
-      });
+      const replacementSelectors = { '.test4': '.test4-replaced' };
+      return cssSelectorExtract.process(css, selectors, replacementSelectors)
+        .then((extractCss) => {
+          expect(extractCss.trim()).to.equal(referenceCss.trim());
+        });
     });
 
     /**
      * .test5
      */
-    it('correct way to extract @media nested selector (SCSS): should return `.test5 @media` selector', () => { // eslint-disable-line max-len
-      const referenceCss = fs.readFileSync('test/css/reference/test5.scss', { encoding: 'utf8' });
+    it('SCSS: correct way to extract nested selector - should return `.nested .test5` selector', () => { // eslint-disable-line max-len
+      const referenceScss = fs.readFileSync('test/css/reference/test5.scss', { encoding: 'utf8' });
+      const selectors = ['.nested', '.test5'];
+      return cssSelectorExtract.process(scss, selectors).then((extractCss) => {
+        expect(extractCss.trim()).to.equal(referenceScss.trim());
+      });
+    });
+
+    it('SCSS: wrong way to extract nested selector - should return empty string', () => {
       const selectors = ['.test5'];
-      return cssSelectorExtract.process(css, selectors).then((extractCss) => {
-        expect(extractCss.trim()).to.equal(referenceCss.trim());
+      return cssSelectorExtract.process(scss, selectors).then((extractCss) => {
+        expect(extractCss.trim()).to.equal('');
       });
     });
 
     /**
      * .test6
      */
-    it('selector replacement: should return `.test6-replaced` selector', () => {
-      const referenceCss = fs.readFileSync('test/css/reference/test6.scss', { encoding: 'utf8' });
+    it('SCSS: correct way to extract @media nested selector - should return `.test6 @media` selector', () => { // eslint-disable-line max-len
+      const referenceScss = fs.readFileSync('test/css/reference/test6.scss', { encoding: 'utf8' });
       const selectors = ['.test6'];
-      const replacementSelectors = { '.test6': '.test6-replaced' };
-      return cssSelectorExtract.process(css, selectors, replacementSelectors).then((extractCss) => {
-        expect(extractCss.trim()).to.equal(referenceCss.trim());
+      return cssSelectorExtract.process(scss, selectors).then((extractCss) => {
+        expect(extractCss.trim()).to.equal(referenceScss.trim());
       });
     });
   });
