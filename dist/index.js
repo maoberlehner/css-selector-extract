@@ -3,23 +3,31 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var postcss = _interopDefault(require('postcss'));
-var postcssScss = _interopDefault(require('postcss-scss'));
 
 var CssSelectorExtract = function CssSelectorExtract () {};
 
-CssSelectorExtract.process = function process (css, selectors, replacementSelectors) {
+CssSelectorExtract.process = function process (css, selectors, replacementSelectors, postcssSyntax) {
+    if ( postcssSyntax === void 0 ) postcssSyntax = undefined;
+
   return new Promise(function (resolve) {
-    var result = CssSelectorExtract.processSync(css, selectors, replacementSelectors);
+    var result = CssSelectorExtract.processSync(
+      css,
+      selectors,
+      replacementSelectors,
+      postcssSyntax
+    );
     resolve(result);
   });
 };
 
-CssSelectorExtract.processSync = function processSync (css, selectors, replacementSelectors) {
+CssSelectorExtract.processSync = function processSync (css, selectors, replacementSelectors, postcssSyntax) {
+    if ( postcssSyntax === void 0 ) postcssSyntax = undefined;
+
   var postcssSelectorExtract = this.prototype.postcssSelectorExtract(
     selectors,
     replacementSelectors
   );
-  return postcss(postcssSelectorExtract).process(css, { syntax: postcssScss }).css;
+  return postcss(postcssSelectorExtract).process(css, { syntax: postcssSyntax }).css;
 };
 
 CssSelectorExtract.prototype.postcssSelectorExtract = function postcssSelectorExtract (selectors, replacementSelectors) {

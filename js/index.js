@@ -3,22 +3,26 @@
  * @author Markus Oberlehner
  */
 import postcss from 'postcss';
-import postcssScss from 'postcss-scss';
 
 export default class CssSelectorExtract {
-  static process(css, selectors, replacementSelectors) {
+  static process(css, selectors, replacementSelectors, postcssSyntax = undefined) {
     return new Promise((resolve) => {
-      const result = CssSelectorExtract.processSync(css, selectors, replacementSelectors);
+      const result = CssSelectorExtract.processSync(
+        css,
+        selectors,
+        replacementSelectors,
+        postcssSyntax
+      );
       resolve(result);
     });
   }
 
-  static processSync(css, selectors, replacementSelectors) {
+  static processSync(css, selectors, replacementSelectors, postcssSyntax = undefined) {
     const postcssSelectorExtract = this.prototype.postcssSelectorExtract(
       selectors,
       replacementSelectors
     );
-    return postcss(postcssSelectorExtract).process(css, { syntax: postcssScss }).css;
+    return postcss(postcssSelectorExtract).process(css, { syntax: postcssSyntax }).css;
   }
 
   postcssSelectorExtract(selectors, replacementSelectors = {}) {

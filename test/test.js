@@ -3,10 +3,12 @@
 const cssSelectorExtract = require('../');
 const expect = require('chai').expect;
 const fs = require('fs');
+const postcssScssSyntax = require('postcss-scss');
 
 describe('CssSelectorExtract', () => {
   const css = fs.readFileSync('test/css/test.css', { encoding: 'utf8' });
   const scss = fs.readFileSync('test/css/test.scss', { encoding: 'utf8' });
+  const scssSyntaxTest = fs.readFileSync('test/css/scss-syntax-test.scss', { encoding: 'utf8' });
 
   it('should be a function', () => {
     expect(typeof cssSelectorExtract).to.equal('function');
@@ -79,16 +81,18 @@ describe('CssSelectorExtract', () => {
     it('SCSS: correct way to extract nested selector - should return `.nested .test5` selector', () => { // eslint-disable-line max-len
       const referenceScss = fs.readFileSync('test/css/reference/test5.scss', { encoding: 'utf8' });
       const selectors = ['.nested', '.test5'];
-      return cssSelectorExtract.process(scss, selectors).then((extractCss) => {
-        expect(extractCss.trim()).to.equal(referenceScss.trim());
-      });
+      return cssSelectorExtract.process(scss, selectors, undefined, postcssScssSyntax)
+        .then((extractCss) => {
+          expect(extractCss.trim()).to.equal(referenceScss.trim());
+        });
     });
 
     it('SCSS: wrong way to extract nested selector - should return empty string', () => {
       const selectors = ['.test5'];
-      return cssSelectorExtract.process(scss, selectors).then((extractCss) => {
-        expect(extractCss.trim()).to.equal('');
-      });
+      return cssSelectorExtract.process(scss, selectors, undefined, postcssScssSyntax)
+        .then((extractCss) => {
+          expect(extractCss.trim()).to.equal('');
+        });
     });
 
     /**
@@ -97,9 +101,22 @@ describe('CssSelectorExtract', () => {
     it('SCSS: correct way to extract @media nested selector - should return `.test6 @media` selector', () => { // eslint-disable-line max-len
       const referenceScss = fs.readFileSync('test/css/reference/test6.scss', { encoding: 'utf8' });
       const selectors = ['.test6'];
-      return cssSelectorExtract.process(scss, selectors).then((extractCss) => {
-        expect(extractCss.trim()).to.equal(referenceScss.trim());
-      });
+      return cssSelectorExtract.process(scss, selectors, undefined, postcssScssSyntax)
+        .then((extractCss) => {
+          expect(extractCss.trim()).to.equal(referenceScss.trim());
+        });
+    });
+
+    /**
+     * .test7
+     */
+    it('SCSS: test SCSS syntax - should finish without errors', () => {
+      const referenceScss = fs.readFileSync('test/css/reference/test7.scss', { encoding: 'utf8' });
+      const selectors = ['.none'];
+      return cssSelectorExtract.process(scssSyntaxTest, selectors, undefined, postcssScssSyntax)
+        .then((extractCss) => {
+          expect(extractCss.trim()).to.equal(referenceScss.trim());
+        });
     });
   });
 
