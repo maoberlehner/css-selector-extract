@@ -7,16 +7,16 @@ var cssSelectorExtract = require('css-selector-extract');
 
 // CSS source code as string.
 var css = '.btn { ... } .btn-alert { ... } .btn-success { ... }';
-// Array of selectors which should be extracted.
-var selectors = ['.btn'];
+// Array of selector filter objects with selectors which should be extracted.
+var selectorFilters = [{ selector: '.btn' }];
 
 // Asynchronous:
-cssSelectorExtract.process(css, selectors).then((extractedCss) => {
+cssSelectorExtract.process(css, selectorFilters).then((extractedCss) => {
   console.log(extractedCss); // Outputs: `.btn { ... }`.
 });
 
 // Synchronous:
-var extractedCss = cssSelectorExtract.processSync(css, selectors);
+var extractedCss = cssSelectorExtract.processSync(css, selectorFilters);
 console.log(extractedCss); // Outputs: `.btn { ... }`.
 ```
 
@@ -26,14 +26,29 @@ var cssSelectorExtract = require('css-selector-extract');
 
 // CSS source code as string.
 var css = '.btn { ... } .btn-alert { ... } .btn-success { ... }';
-// Array of selectors which should be extracted.
-var selectors = ['.btn'];
-// Define replacements for extracted selectors.
-var replacementSelectors = { '.btn': '.button' };
+// Array of selector filter objects with selectors
+// which should be extracted and replaced.
+var selectorFilters = [{ selector: '.btn', replacement: '.button' }];
 
 // Asynchronous:
-cssSelectorExtract.process(css, selectors, replacementSelectors).then((extractedCss) => {
+cssSelectorExtract.process(css, selectorFilters).then((extractedCss) => {
   console.log(extractedCss); // Outputs: `.button { ... }`.
+});
+```
+
+### Usage with syntaxes other than pure CSS
+Install the corresponding postcss syntax plugin (e.g. [postcss-scss](https://www.npmjs.com/package/postcss-scss) or [postcss-less](https://www.npmjs.com/package/postcss-less)).
+
+```js
+var cssSelectorExtract = require('css-selector-extract');
+var postcssScss = require('postcss-scss');
+
+var css = '.nested { .selector { ... } }';
+var selectorFilters = [{ selector: '.nested' }, { selector: '.selector' }];
+
+// Add the postcss syntax plugin as third parameter.
+cssSelectorExtract.process(css, selectorFilters, postcssScss).then((extractedCss) => {
+  console.log(extractedCss);
 });
 ```
 
