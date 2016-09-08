@@ -3,27 +3,54 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var postcss = _interopDefault(require('postcss'));
-var postcssScss = _interopDefault(require('postcss-scss'));
 
 var CssSelectorExtract = function CssSelectorExtract () {};
 
-CssSelectorExtract.process = function process(css, selectors, replacementSelectors) {
+CssSelectorExtract.process = function process (css, selectorFilters, postcssSyntax) {
+    if ( postcssSyntax === void 0 ) postcssSyntax = undefined;
+
   return new Promise(function (resolve) {
-    var result = CssSelectorExtract.processSync(css, selectors, replacementSelectors);
+    var result = CssSelectorExtract.processSync(
+      css,
+      selectorFilters,
+      postcssSyntax
+    );
     resolve(result);
   });
 };
 
-CssSelectorExtract.processSync = function processSync(css, selectors, replacementSelectors) {
-  var postcssSelectorExtract = this.prototype._postcssSelectorExtract(
-    selectors,
-    replacementSelectors
-  );
-  return postcss(postcssSelectorExtract).process(css, { syntax: postcssScss }).css;
+/**
+ * Synchronously extract and replace CSS selectors from a string.
+ * @param {string} css - CSS code.
+ * @param {Array} selectorFilters - Array of selector filter objects or selectors.
+ * @param {Object} postcssSyntax - PostCSS syntax plugin.
+ * @return {string} Extracted selectors.
+ */
+CssSelectorExtract.processSync = function processSync (css, selectorFilters, postcssSyntax) {
+    if ( postcssSyntax === void 0 ) postcssSyntax = undefined;
+
+  var postcssSelectorExtract = this.prototype.postcssSelectorExtract(selectorFilters);
+  return postcss(postcssSelectorExtract).process(css, { syntax: postcssSyntax }).css;
 };
 
-CssSelectorExtract.prototype._postcssSelectorExtract = function _postcssSelectorExtract(selectors, replacementSelectors) {
-    if ( replacementSelectors === void 0 ) replacementSelectors = {};
+/**
+ * Provide a PostCSS plugin for extracting and replacing CSS selectors.
+ * @param {Array} selectorFilters - Array of selector filter objects or selectors.
+ * @return {Function} PostCSS plugin.
+ */
+CssSelectorExtract.prototype.postcssSelectorExtract = function postcssSelectorExtract (selectorFilters) {
+    if ( selectorFilters === void 0 ) selectorFilters = [];
+
+  var selectors = selectorFilters.map(
+    function (filter) { return filter.selector || (typeof filter === 'string' ? filter : false); }
+  );
+  var replacementSelectors = selectorFilters.reduce(function (previousValue, selectorFilter) {
+    if (selectorFilter.replacement) {
+      // eslint-disable-next-line no-param-reassign
+      previousValue[selectorFilter.selector] = selectorFilter.replacement;
+    }
+    return previousValue;
+  }, {});
 
   return postcss.plugin('postcss-extract-selectors', function () { return function (cssNodes) {
     cssNodes.walkRules(function (rule) {

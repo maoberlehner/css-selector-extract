@@ -1,29 +1,11 @@
-.test1 {
-  content: 'Test 1';
-}
-
-.nested .test2 {
-  content: 'Test 2';
-}
-
 .nested {
-  .test3 {
-    content: 'Test 3';
-  }
-}
-
-@media (min-width: 30em) {
-  .test4 {
-    content: 'Test 4';
-  }
-}
-
-.test5 {
-  @media (min-width: 30em) {
+  .test5 {
     content: 'Test 5';
   }
 }
 
 .test6 {
-  content: 'Test 6';
+  @media (min-width: 30em) {
+    content: 'Test 6';
+  }
 }

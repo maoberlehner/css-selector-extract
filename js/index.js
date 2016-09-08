@@ -1,27 +1,53 @@
-/**
- * css-selector-extract
- * @author Markus Oberlehner
- */
 import postcss from 'postcss';
-import postcssScss from 'postcss-scss';
 
 export default class CssSelectorExtract {
-  static process(css, selectors, replacementSelectors) {
+  /**
+   * Asynchronously extract and replace CSS selectors from a string.
+   * @param {string} css - CSS code.
+   * @param {Array} selectorFilters - Array of selector filter objects or selectors.
+   * @param {Object} postcssSyntax - PostCSS syntax plugin.
+   * @return {Promise} Promise for a string with the extracted selectors.
+   */
+  static process(css, selectorFilters, postcssSyntax = undefined) {
     return new Promise((resolve) => {
-      const result = CssSelectorExtract.processSync(css, selectors, replacementSelectors);
+      const result = CssSelectorExtract.processSync(
+        css,
+        selectorFilters,
+        postcssSyntax
+      );
       resolve(result);
     });
   }
 
-  static processSync(css, selectors, replacementSelectors) {
-    const postcssSelectorExtract = this.prototype._postcssSelectorExtract(
-      selectors,
-      replacementSelectors
-    );
-    return postcss(postcssSelectorExtract).process(css, { syntax: postcssScss }).css;
+  /**
+   * Synchronously extract and replace CSS selectors from a string.
+   * @param {string} css - CSS code.
+   * @param {Array} selectorFilters - Array of selector filter objects or selectors.
+   * @param {Object} postcssSyntax - PostCSS syntax plugin.
+   * @return {string} Extracted selectors.
+   */
+  static processSync(css, selectorFilters, postcssSyntax = undefined) {
+    const postcssSelectorExtract = this.prototype.postcssSelectorExtract(selectorFilters);
+    return postcss(postcssSelectorExtract).process(css, { syntax: postcssSyntax }).css;
   }
 
-  _postcssSelectorExtract(selectors, replacementSelectors = {}) {
+  /**
+   * Provide a PostCSS plugin for extracting and replacing CSS selectors.
+   * @param {Array} selectorFilters - Array of selector filter objects or selectors.
+   * @return {Function} PostCSS plugin.
+   */
+  postcssSelectorExtract(selectorFilters = []) {
+    const selectors = selectorFilters.map(
+      filter => filter.selector || (typeof filter === 'string' ? filter : false)
+    );
+    const replacementSelectors = selectorFilters.reduce((previousValue, selectorFilter) => {
+      if (selectorFilter.replacement) {
+        // eslint-disable-next-line no-param-reassign
+        previousValue[selectorFilter.selector] = selectorFilter.replacement;
+      }
+      return previousValue;
+    }, {});
+
     return postcss.plugin('postcss-extract-selectors', () => (cssNodes) => {
       cssNodes.walkRules((rule) => {
         // Split combined selectors into an array.
