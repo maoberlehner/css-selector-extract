@@ -3,25 +3,34 @@
  * @author Markus Oberlehner
  */
 import postcss from 'postcss';
-import postcssScss from 'postcss-scss';
 
 export default class CssSelectorExtract {
-  static process(css, selectors, replacementSelectors) {
+  static process(css, selectorFilters, postcssSyntax = undefined) {
     return new Promise((resolve) => {
-      const result = CssSelectorExtract.processSync(css, selectors, replacementSelectors);
+      const result = CssSelectorExtract.processSync(
+        css,
+        selectorFilters,
+        postcssSyntax
+      );
       resolve(result);
     });
   }
 
-  static processSync(css, selectors, replacementSelectors) {
-    const postcssSelectorExtract = this.prototype._postcssSelectorExtract(
-      selectors,
-      replacementSelectors
-    );
-    return postcss(postcssSelectorExtract).process(css, { syntax: postcssScss }).css;
+  static processSync(css, selectorFilters, postcssSyntax = undefined) {
+    const postcssSelectorExtract = this.prototype.postcssSelectorExtract(selectorFilters);
+    return postcss(postcssSelectorExtract).process(css, { syntax: postcssSyntax }).css;
   }
 
-  _postcssSelectorExtract(selectors, replacementSelectors = {}) {
+  postcssSelectorExtract(selectorFilters = []) {
+    const selectors = selectorFilters.map(filter => filter.selector);
+    const replacementSelectors = selectorFilters.reduce((previousValue, selectorFilter) => {
+      if (selectorFilter.replacement) {
+        // eslint-disable-next-line no-param-reassign
+        previousValue[selectorFilter.selector] = selectorFilter.replacement;
+      }
+      return previousValue;
+    }, {});
+
     return postcss.plugin('postcss-extract-selectors', () => (cssNodes) => {
       cssNodes.walkRules((rule) => {
         // Split combined selectors into an array.
