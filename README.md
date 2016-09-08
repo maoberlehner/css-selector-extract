@@ -7,7 +7,7 @@ var cssSelectorExtract = require('css-selector-extract');
 
 // CSS source code as string.
 var css = '.btn { ... } .btn-alert { ... } .btn-success { ... }';
-// Array of selector filter objects with selectors which should be extracted.
+// Array of selectors which should get extracted.
 var selectorFilters = ['.btn'];
 
 // Asynchronous:
@@ -27,7 +27,7 @@ var cssSelectorExtract = require('css-selector-extract');
 // CSS source code as string.
 var css = '.btn { ... } .btn-alert { ... } .btn-success { ... }';
 // Array of selector filter objects with selectors
-// which should be extracted and replaced.
+// which should get extracted and replaced.
 var selectorFilters = [{ selector: '.btn', replacement: '.button' }];
 
 // Asynchronous:
