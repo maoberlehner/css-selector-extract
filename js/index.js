@@ -5,27 +5,32 @@
 import postcss from 'postcss';
 
 export default class CssSelectorExtract {
-  static process(css, selectors, replacementSelectors, postcssSyntax = undefined) {
+  static process(css, selectorFilters, postcssSyntax = undefined) {
     return new Promise((resolve) => {
       const result = CssSelectorExtract.processSync(
         css,
-        selectors,
-        replacementSelectors,
+        selectorFilters,
         postcssSyntax
       );
       resolve(result);
     });
   }
 
-  static processSync(css, selectors, replacementSelectors, postcssSyntax = undefined) {
-    const postcssSelectorExtract = this.prototype.postcssSelectorExtract(
-      selectors,
-      replacementSelectors
-    );
+  static processSync(css, selectorFilters, postcssSyntax = undefined) {
+    const postcssSelectorExtract = this.prototype.postcssSelectorExtract(selectorFilters);
     return postcss(postcssSelectorExtract).process(css, { syntax: postcssSyntax }).css;
   }
 
-  postcssSelectorExtract(selectors, replacementSelectors = {}) {
+  postcssSelectorExtract(selectorFilters = []) {
+    const selectors = selectorFilters.map(filter => filter.selector);
+    const replacementSelectors = selectorFilters.reduce((previousValue, selectorFilter) => {
+      if (selectorFilter.replacement) {
+        // eslint-disable-next-line no-param-reassign
+        previousValue[selectorFilter.selector] = selectorFilter.replacement;
+      }
+      return previousValue;
+    }, {});
+
     return postcss.plugin('postcss-extract-selectors', () => (cssNodes) => {
       cssNodes.walkRules((rule) => {
         // Split combined selectors into an array.

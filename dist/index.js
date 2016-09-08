@@ -4,34 +4,43 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var postcss = _interopDefault(require('postcss'));
 
+/**
+ * css-selector-extract
+ * @author Markus Oberlehner
+ */
 var CssSelectorExtract = function CssSelectorExtract () {};
 
-CssSelectorExtract.process = function process (css, selectors, replacementSelectors, postcssSyntax) {
+CssSelectorExtract.process = function process (css, selectorFilters, postcssSyntax) {
     if ( postcssSyntax === void 0 ) postcssSyntax = undefined;
 
   return new Promise(function (resolve) {
     var result = CssSelectorExtract.processSync(
       css,
-      selectors,
-      replacementSelectors,
+      selectorFilters,
       postcssSyntax
     );
     resolve(result);
   });
 };
 
-CssSelectorExtract.processSync = function processSync (css, selectors, replacementSelectors, postcssSyntax) {
+CssSelectorExtract.processSync = function processSync (css, selectorFilters, postcssSyntax) {
     if ( postcssSyntax === void 0 ) postcssSyntax = undefined;
 
-  var postcssSelectorExtract = this.prototype.postcssSelectorExtract(
-    selectors,
-    replacementSelectors
-  );
+  var postcssSelectorExtract = this.prototype.postcssSelectorExtract(selectorFilters);
   return postcss(postcssSelectorExtract).process(css, { syntax: postcssSyntax }).css;
 };
 
-CssSelectorExtract.prototype.postcssSelectorExtract = function postcssSelectorExtract (selectors, replacementSelectors) {
-    if ( replacementSelectors === void 0 ) replacementSelectors = {};
+CssSelectorExtract.prototype.postcssSelectorExtract = function postcssSelectorExtract (selectorFilters) {
+    if ( selectorFilters === void 0 ) selectorFilters = [];
+
+  var selectors = selectorFilters.map(function (filter) { return filter.selector; });
+  var replacementSelectors = selectorFilters.reduce(function (previousValue, selectorFilter) {
+    if (selectorFilter.replacement) {
+      // eslint-disable-next-line no-param-reassign
+      previousValue[selectorFilter.selector] = selectorFilter.replacement;
+    }
+    return previousValue;
+  }, {});
 
   return postcss.plugin('postcss-extract-selectors', function () { return function (cssNodes) {
     cssNodes.walkRules(function (rule) {
