@@ -4,10 +4,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var postcss = _interopDefault(require('postcss'));
 
-/**
- * css-selector-extract
- * @author Markus Oberlehner
- */
 var CssSelectorExtract = function CssSelectorExtract () {};
 
 CssSelectorExtract.process = function process (css, selectorFilters, postcssSyntax) {
@@ -23,6 +19,13 @@ CssSelectorExtract.process = function process (css, selectorFilters, postcssSynt
   });
 };
 
+/**
+ * Synchronously extract and replace CSS selectors from a string.
+ * @param {string} css - CSS code.
+ * @param {Array} selectorFilters - Array of selector filter objects or selectors.
+ * @param {Object} postcssSyntax - PostCSS syntax plugin.
+ * @return {string} Extracted selectors.
+ */
 CssSelectorExtract.processSync = function processSync (css, selectorFilters, postcssSyntax) {
     if ( postcssSyntax === void 0 ) postcssSyntax = undefined;
 
@@ -30,6 +33,11 @@ CssSelectorExtract.processSync = function processSync (css, selectorFilters, pos
   return postcss(postcssSelectorExtract).process(css, { syntax: postcssSyntax }).css;
 };
 
+/**
+ * Provide a PostCSS plugin for extracting and replacing CSS selectors.
+ * @param {Array} selectorFilters - Array of selector filter objects or selectors.
+ * @return {Function} PostCSS plugin.
+ */
 CssSelectorExtract.prototype.postcssSelectorExtract = function postcssSelectorExtract (selectorFilters) {
     if ( selectorFilters === void 0 ) selectorFilters = [];
 
