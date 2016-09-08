@@ -41,7 +41,9 @@ CssSelectorExtract.processSync = function processSync (css, selectorFilters, pos
 CssSelectorExtract.prototype.postcssSelectorExtract = function postcssSelectorExtract (selectorFilters) {
     if ( selectorFilters === void 0 ) selectorFilters = [];
 
-  var selectors = selectorFilters.map(function (filter) { return filter.selector; });
+  var selectors = selectorFilters.map(
+    function (filter) { return filter.selector || (typeof filter === 'string' ? filter : false); }
+  );
   var replacementSelectors = selectorFilters.reduce(function (previousValue, selectorFilter) {
     if (selectorFilter.replacement) {
       // eslint-disable-next-line no-param-reassign

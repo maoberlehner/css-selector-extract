@@ -37,7 +37,9 @@ export default class CssSelectorExtract {
    * @return {Function} PostCSS plugin.
    */
   postcssSelectorExtract(selectorFilters = []) {
-    const selectors = selectorFilters.map(filter => filter.selector);
+    const selectors = selectorFilters.map(
+      filter => filter.selector || (typeof filter === 'string' ? filter : false)
+    );
     const replacementSelectors = selectorFilters.reduce((previousValue, selectorFilter) => {
       if (selectorFilter.replacement) {
         // eslint-disable-next-line no-param-reassign

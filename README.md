@@ -8,7 +8,7 @@ var cssSelectorExtract = require('css-selector-extract');
 // CSS source code as string.
 var css = '.btn { ... } .btn-alert { ... } .btn-success { ... }';
 // Array of selector filter objects with selectors which should be extracted.
-var selectorFilters = [{ selector: '.btn' }];
+var selectorFilters = ['.btn'];
 
 // Asynchronous:
 cssSelectorExtract.process(css, selectorFilters).then((extractedCss) => {
@@ -44,7 +44,7 @@ var cssSelectorExtract = require('css-selector-extract');
 var postcssScss = require('postcss-scss');
 
 var css = '.nested { .selector { ... } }';
-var selectorFilters = [{ selector: '.nested' }, { selector: '.selector' }];
+var selectorFilters = ['.nested', '.selector'];
 
 // Add the postcss syntax plugin as third parameter.
 cssSelectorExtract.process(css, selectorFilters, postcssScss).then((extractedCss) => {
