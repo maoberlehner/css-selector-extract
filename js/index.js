@@ -1,5 +1,8 @@
 import postcss from 'postcss';
 
+/**
+ * CssSelectorExtract
+ */
 export default class CssSelectorExtract {
   /**
    * Asynchronously extract and replace CSS selectors from a string.
