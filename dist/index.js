@@ -4,6 +4,9 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var postcss = _interopDefault(require('postcss'));
 
+/**
+ * CssSelectorExtract
+ */
 var CssSelectorExtract = function CssSelectorExtract () {};
 
 CssSelectorExtract.process = function process (css, selectorFilters, postcssSyntax) {
