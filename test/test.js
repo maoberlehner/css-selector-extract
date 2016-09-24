@@ -103,7 +103,7 @@ describe('CssSelectorExtract', () => {
         });
     });
 
-    it('RegEx: find selectors using regular expressions', () => {
+    it('RegEx: extract selectors using regular expressions', () => {
       const referenceCss = fs.readFileSync('test/css/reference/test8.css', { encoding: 'utf8' });
       const selectorFilters = [/^\.test-.*/];
       return cssSelectorExtract.process(css, selectorFilters)
@@ -112,7 +112,7 @@ describe('CssSelectorExtract', () => {
         });
     });
 
-    it('RegEx: find and replace selectors using regular expressions', () => {
+    it('RegEx: extract and replace selectors using regular expressions', () => {
       const referenceCss = fs.readFileSync('test/css/reference/test9.css', { encoding: 'utf8' });
       const selectorFilters = [{
         selector: /^\.test-(.+)-(.+).*/,
@@ -124,7 +124,7 @@ describe('CssSelectorExtract', () => {
         });
     });
 
-    it('Bootstrap: find and replace selectors using regular expressions', () => {
+    it('Bootstrap: extract and replace selectors using regular expressions', () => {
       const bootstrapCss = fs.readFileSync('node_modules/bootstrap/scss/_alert.scss', {
         encoding: 'utf8'
       });
