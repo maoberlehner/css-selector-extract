@@ -109,6 +109,29 @@ describe('CssSelectorExtract', () => {
           expect(extractCss.trim()).to.equal(referenceScss.trim());
         });
     });
+
+    // .test8
+    it('RegEx: find selectors using regular expressions', () => {
+      const referenceCss = fs.readFileSync('test/css/reference/test8.css', { encoding: 'utf8' });
+      const selectorFilters = [/^\.test8-some.*/];
+      return cssSelectorExtract.process(css, selectorFilters, postcssScssSyntax)
+        .then((extractCss) => {
+          expect(extractCss.trim()).to.equal(referenceCss.trim());
+        });
+    });
+
+    // .test9
+    it('RegEx: find and replace selectors using regular expressions', () => {
+      const referenceCss = fs.readFileSync('test/css/reference/test9.css', { encoding: 'utf8' });
+      const selectorFilters = [{
+        selector: /^\.test9-(.+)-(.+).*/,
+        replacement: '.test9__$1--$2'
+      }];
+      return cssSelectorExtract.process(css, selectorFilters, postcssScssSyntax)
+        .then((extractCss) => {
+          expect(extractCss.trim()).to.equal(referenceCss.trim());
+        });
+    });
   });
 
   /** @test {CssSelectorExtract.processSync} */
