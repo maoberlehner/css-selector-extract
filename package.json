@@ -19,6 +19,7 @@
     "postcss": "^5.2.0"
   },
   "devDependencies": {
+    "bootstrap": "^4.0.0-alpha.4",
     "chai": "^3.5.0",
     "eslint": "^3.4.0",
     "eslint-config-modularis": "^1.0.0",

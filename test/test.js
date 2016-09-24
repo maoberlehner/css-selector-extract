@@ -106,7 +106,7 @@ describe('CssSelectorExtract', () => {
     it('RegEx: find selectors using regular expressions', () => {
       const referenceCss = fs.readFileSync('test/css/reference/test8.css', { encoding: 'utf8' });
       const selectorFilters = [/^\.test-.*/];
-      return cssSelectorExtract.process(css, selectorFilters, postcssScssSyntax)
+      return cssSelectorExtract.process(css, selectorFilters)
         .then((extractCss) => {
           expect(extractCss.trim()).to.equal(referenceCss.trim());
         });
@@ -118,7 +118,34 @@ describe('CssSelectorExtract', () => {
         selector: /^\.test-(.+)-(.+).*/,
         replacement: '.test__$1--$2'
       }];
-      return cssSelectorExtract.process(css, selectorFilters, postcssScssSyntax)
+      return cssSelectorExtract.process(css, selectorFilters)
+        .then((extractCss) => {
+          expect(extractCss.trim()).to.equal(referenceCss.trim());
+        });
+    });
+
+    it('Bootstrap: find and replace selectors using regular expressions', () => {
+      const bootstrapCss = fs.readFileSync('node_modules/bootstrap/scss/_alert.scss', {
+        encoding: 'utf8'
+      });
+      const referenceCss = fs.readFileSync('test/css/reference/test10.scss', { encoding: 'utf8' });
+      const selectorFilters = [
+        '.alert',
+        '.close',
+        {
+          selector: '.alert-heading',
+          replacement: '.alert__heading'
+        },
+        {
+          selector: '.alert-link',
+          replacement: '.alert__link'
+        },
+        {
+          selector: /^\.alert-(.+)/,
+          replacement: '.alert--$1'
+        }
+      ];
+      return cssSelectorExtract.process(bootstrapCss, selectorFilters, postcssScssSyntax)
         .then((extractCss) => {
           expect(extractCss.trim()).to.equal(referenceCss.trim());
         });
