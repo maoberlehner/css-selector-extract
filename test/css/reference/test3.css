@@ -1,5 +1,5 @@
 @media (min-width: 30em) {
-  .test3 {
-    content: 'Test 3';
+  .nested-in-media-query {
+    content: 'nested in media query';
   }
 }
