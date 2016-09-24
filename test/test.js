@@ -21,20 +21,18 @@ describe('CssSelectorExtract', () => {
       expect(typeof cssSelectorExtract.process).to.equal('function');
     });
 
-    // .test1
-    it('CSS: correct way to extract default selector - should return `.test1` selector', () => {
+    it('CSS: correct way to extract default selector - should return filtered selector', () => {
       const referenceCss = fs.readFileSync('test/css/reference/test1.css', { encoding: 'utf8' });
-      const selectorFilters = ['.test1'];
+      const selectorFilters = ['.test-selector'];
       return cssSelectorExtract.process(css, selectorFilters)
         .then((extractCss) => {
           expect(extractCss.trim()).to.equal(referenceCss.trim());
         });
     });
 
-    // .test2
-    it('CSS: correct way to extract nested selector - should return `.nested .test2` selector', () => { // eslint-disable-line max-len
+    it('CSS: correct way to extract nested selector - should return filtered selector', () => { // eslint-disable-line max-len
       const referenceCss = fs.readFileSync('test/css/reference/test2.css', { encoding: 'utf8' });
-      const selectorFilters = ['.nested .test2'];
+      const selectorFilters = ['.nest .nested-test-selector'];
       return cssSelectorExtract.process(css, selectorFilters)
         .then((extractCss) => {
           expect(extractCss.trim()).to.equal(referenceCss.trim());
@@ -42,29 +40,27 @@ describe('CssSelectorExtract', () => {
     });
 
     it('CSS: wrong way to extract nested selector - should return empty string', () => {
-      const selectorFilters = ['.test2'];
+      const selectorFilters = ['.nested-test-selector'];
       return cssSelectorExtract.process(css, selectorFilters)
         .then((extractCss) => {
           expect(extractCss.trim()).to.equal('');
         });
     });
 
-    // .test3
-    it('CSS: correct way to extract @media nested selector - should return `@media .test3` selector', () => { // eslint-disable-line max-len
+    it('CSS: correct way to extract @media nested selector - should return filtered selector', () => { // eslint-disable-line max-len
       const referenceCss = fs.readFileSync('test/css/reference/test3.css', { encoding: 'utf8' });
-      const selectorFilters = ['.test3'];
+      const selectorFilters = ['.nested-in-media-query'];
       return cssSelectorExtract.process(css, selectorFilters)
         .then((extractCss) => {
           expect(extractCss.trim()).to.equal(referenceCss.trim());
         });
     });
 
-    // .test4
-    it('CSS: selector replacement - should return `.test4-replaced` selector', () => {
+    it('CSS: selector replacement - should return replaced selector', () => {
       const referenceCss = fs.readFileSync('test/css/reference/test4.css', { encoding: 'utf8' });
       const selectorFilters = [{
-        selector: '.test4',
-        replacement: '.test4-replaced'
+        selector: '.test-selector',
+        replacement: '.test-selector-replaced'
       }];
       return cssSelectorExtract.process(css, selectorFilters)
         .then((extractCss) => {
@@ -72,41 +68,86 @@ describe('CssSelectorExtract', () => {
         });
     });
 
-    // .test5
     it('SCSS: wrong way to extract nested selector - should return empty string', () => {
-      const selectorFilters = ['.test5'];
+      const selectorFilters = ['.nested-test-selector'];
       return cssSelectorExtract.process(scss, selectorFilters, postcssScssSyntax)
         .then((extractCss) => {
           expect(extractCss.trim()).to.equal('');
         });
     });
 
-    it('SCSS: correct way to extract nested selector - should return `.nested .test5` selector', () => { // eslint-disable-line max-len
+    it('SCSS: correct way to extract nested selector - should return filtered selector', () => { // eslint-disable-line max-len
       const referenceScss = fs.readFileSync('test/css/reference/test5.scss', { encoding: 'utf8' });
-      const selectorFilters = ['.nested', '.test5'];
+      const selectorFilters = ['.nest', '.nested-test-selector'];
       return cssSelectorExtract.process(scss, selectorFilters, postcssScssSyntax)
         .then((extractCss) => {
           expect(extractCss.trim()).to.equal(referenceScss.trim());
         });
     });
 
-    // .test6
-    it('SCSS: correct way to extract @media nested selector - should return `.test6 @media` selector', () => { // eslint-disable-line max-len
+    it('SCSS: correct way to extract @media nested selector - should return filtered selector', () => { // eslint-disable-line max-len
       const referenceScss = fs.readFileSync('test/css/reference/test6.scss', { encoding: 'utf8' });
-      const selectorFilters = ['.test6'];
+      const selectorFilters = ['.media-query-in-test-selector'];
       return cssSelectorExtract.process(scss, selectorFilters, postcssScssSyntax)
         .then((extractCss) => {
           expect(extractCss.trim()).to.equal(referenceScss.trim());
         });
     });
 
-    // .test7
     it('SCSS: test SCSS syntax - should finish without errors', () => {
       const referenceScss = fs.readFileSync('test/css/reference/test7.scss', { encoding: 'utf8' });
       const selectorFilters = ['.none'];
       return cssSelectorExtract.process(scssSyntaxTest, selectorFilters, postcssScssSyntax)
         .then((extractCss) => {
           expect(extractCss.trim()).to.equal(referenceScss.trim());
+        });
+    });
+
+    it('RegEx: extract selectors using regular expressions', () => {
+      const referenceCss = fs.readFileSync('test/css/reference/test8.css', { encoding: 'utf8' });
+      const selectorFilters = [/^\.test-.*/];
+      return cssSelectorExtract.process(css, selectorFilters)
+        .then((extractCss) => {
+          expect(extractCss.trim()).to.equal(referenceCss.trim());
+        });
+    });
+
+    it('RegEx: extract and replace selectors using regular expressions', () => {
+      const referenceCss = fs.readFileSync('test/css/reference/test9.css', { encoding: 'utf8' });
+      const selectorFilters = [{
+        selector: /^\.test-(.+)-(.+).*/,
+        replacement: '.test__$1--$2'
+      }];
+      return cssSelectorExtract.process(css, selectorFilters)
+        .then((extractCss) => {
+          expect(extractCss.trim()).to.equal(referenceCss.trim());
+        });
+    });
+
+    it('Bootstrap: extract and replace selectors using regular expressions', () => {
+      const bootstrapCss = fs.readFileSync('node_modules/bootstrap/scss/_alert.scss', {
+        encoding: 'utf8'
+      });
+      const referenceCss = fs.readFileSync('test/css/reference/test10.scss', { encoding: 'utf8' });
+      const selectorFilters = [
+        '.alert',
+        '.close',
+        {
+          selector: '.alert-heading',
+          replacement: '.alert__heading'
+        },
+        {
+          selector: '.alert-link',
+          replacement: '.alert__link'
+        },
+        {
+          selector: /^\.alert-(.+)/,
+          replacement: '.alert--$1'
+        }
+      ];
+      return cssSelectorExtract.process(bootstrapCss, selectorFilters, postcssScssSyntax)
+        .then((extractCss) => {
+          expect(extractCss.trim()).to.equal(referenceCss.trim());
         });
     });
   });

@@ -4,6 +4,9 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var postcss = _interopDefault(require('postcss'));
 
+/**
+ * CssSelectorExtract
+ */
 var CssSelectorExtract = function CssSelectorExtract () {};
 
 CssSelectorExtract.process = function process (css, selectorFilters, postcssSyntax) {
@@ -41,43 +44,45 @@ CssSelectorExtract.processSync = function processSync (css, selectorFilters, pos
 CssSelectorExtract.prototype.postcssSelectorExtract = function postcssSelectorExtract (selectorFilters) {
     if ( selectorFilters === void 0 ) selectorFilters = [];
 
-  var selectors = selectorFilters.map(
-    function (filter) { return filter.selector || (typeof filter === 'string' ? filter : false); }
-  );
-  var replacementSelectors = selectorFilters.reduce(function (previousValue, selectorFilter) {
-    if (selectorFilter.replacement) {
-      // eslint-disable-next-line no-param-reassign
-      previousValue[selectorFilter.selector] = selectorFilter.replacement;
-    }
-    return previousValue;
-  }, {});
-
-  return postcss.plugin('postcss-extract-selectors', function () { return function (cssNodes) {
-    cssNodes.walkRules(function (rule) {
+  return postcss.plugin('postcss-extract-selectors', function () { return function (nodes) {
+    nodes.walkRules(function (rule) {
       // Split combined selectors into an array.
       var ruleSelectors = rule.selector
         .split(',')
         .map(function (ruleSelector) { return ruleSelector.replace(/(\r\n|\n|\r)/gm, '').trim(); });
-      // Find whitelisted selectors and remove others.
-      ruleSelectors.forEach(function (ruleSelector, index) {
-        var selectorFilterIndex = selectors.indexOf(ruleSelector);
-        // Replace the selector if a replacement selector is defined.
-        ruleSelectors[index] = replacementSelectors[ruleSelector] || ruleSelectors[index];
-        if (selectorFilterIndex === -1) {
-          // Set an empty value for the selector to mark it for deletion.
-          ruleSelectors[index] = '';
-        }
-      });
-      // Remove empty selectors.
-      ruleSelectors = ruleSelectors.filter(function (ruleSelector) { return ruleSelector.length > 0 || false; });
+
+      ruleSelectors = ruleSelectors.map(function (ruleSelector) {
+        var newSelector = '';
+
+        selectorFilters.some(function (selectorFilter) {
+          var selector = selectorFilter.selector || selectorFilter;
+          var replacementSelector = selectorFilter.replacement;
+          var selectorsAreEqual = selector === ruleSelector;
+          var selectorsMatch = selector instanceof RegExp && selector.test(ruleSelector);
+
+          if (selectorsAreEqual || selectorsMatch) {
+            if (replacementSelector) {
+              newSelector = ruleSelector.replace(selector, replacementSelector);
+            } else {
+              newSelector = ruleSelector;
+            }
+            return true;
+          }
+          return false;
+        });
+
+        return newSelector;
+      }).filter(function (ruleSelector) { return ruleSelector.length > 0 || false; });
+
       if (ruleSelectors.length) {
-        rule.selector = ruleSelectors.join(','); // eslint-disable-line no-param-reassign
+        rule.selector = ruleSelectors.join(',');
       } else {
         // Remove the rule.
         rule.remove();
       }
     });
-    cssNodes.walkAtRules(function (rule) {
+
+    nodes.walkAtRules(function (rule) {
       // Remove empty @ rules.
       if (rule.nodes && !rule.nodes.length) {
         rule.remove();
