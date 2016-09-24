@@ -21,7 +21,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^3.4.0",
-    "eslint-config-modularis": "^0.2.0",
+    "eslint-config-modularis": "^1.0.0",
     "eslint-plugin-import": "^1.14.0",
     "mocha": "^3.0.2",
     "postcss-scss": "^0.3.0",

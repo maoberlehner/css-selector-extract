@@ -45,7 +45,6 @@ export default class CssSelectorExtract {
     );
     const replacementSelectors = selectorFilters.reduce((previousValue, selectorFilter) => {
       if (selectorFilter.replacement) {
-        // eslint-disable-next-line no-param-reassign
         previousValue[selectorFilter.selector] = selectorFilter.replacement;
       }
       return previousValue;
@@ -70,7 +69,7 @@ export default class CssSelectorExtract {
         // Remove empty selectors.
         ruleSelectors = ruleSelectors.filter((ruleSelector) => ruleSelector.length > 0 || false);
         if (ruleSelectors.length) {
-          rule.selector = ruleSelectors.join(','); // eslint-disable-line no-param-reassign
+          rule.selector = ruleSelectors.join(',');
         } else {
           // Remove the rule.
           rule.remove();

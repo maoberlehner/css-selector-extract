@@ -49,7 +49,6 @@ CssSelectorExtract.prototype.postcssSelectorExtract = function postcssSelectorEx
   );
   var replacementSelectors = selectorFilters.reduce(function (previousValue, selectorFilter) {
     if (selectorFilter.replacement) {
-      // eslint-disable-next-line no-param-reassign
       previousValue[selectorFilter.selector] = selectorFilter.replacement;
     }
     return previousValue;
@@ -74,7 +73,7 @@ CssSelectorExtract.prototype.postcssSelectorExtract = function postcssSelectorEx
       // Remove empty selectors.
       ruleSelectors = ruleSelectors.filter(function (ruleSelector) { return ruleSelector.length > 0 || false; });
       if (ruleSelectors.length) {
-        rule.selector = ruleSelectors.join(','); // eslint-disable-line no-param-reassign
+        rule.selector = ruleSelectors.join(',');
       } else {
         // Remove the rule.
         rule.remove();
