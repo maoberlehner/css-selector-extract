@@ -44,15 +44,15 @@ CssSelectorExtract.processSync = function processSync (css, selectorFilters, pos
 CssSelectorExtract.prototype.postcssSelectorExtract = function postcssSelectorExtract (selectorFilters) {
     if ( selectorFilters === void 0 ) selectorFilters = [];
 
-  return postcss.plugin('postcss-extract-selectors', function () { return function (nodes) {
+  return postcss.plugin("postcss-extract-selectors", function () { return function (nodes) {
     nodes.walkRules(function (rule) {
       // Split combined selectors into an array.
       var ruleSelectors = rule.selector
-        .split(',')
-        .map(function (ruleSelector) { return ruleSelector.replace(/(\r\n|\n|\r)/gm, '').trim(); });
+        .split(",")
+        .map(function (ruleSelector) { return ruleSelector.replace(/(\r\n|\n|\r)/gm, "").trim(); });
 
       ruleSelectors = ruleSelectors.map(function (ruleSelector) {
-        var newSelector = '';
+        var newSelector = "";
 
         selectorFilters.some(function (selectorFilter) {
           var selector = selectorFilter.selector || selectorFilter;
@@ -75,7 +75,7 @@ CssSelectorExtract.prototype.postcssSelectorExtract = function postcssSelectorEx
       }).filter(function (ruleSelector) { return ruleSelector.length > 0 || false; });
 
       if (ruleSelectors.length) {
-        rule.selector = ruleSelectors.join(',');
+        rule.selector = ruleSelectors.join(",");
       } else {
         // Remove the rule.
         rule.remove();

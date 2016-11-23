@@ -621,9 +621,9 @@ esdoc@^0.4.8:
     minimist "1.1.1"
     taffydb "2.7.2"
 
-eslint-config-modularis@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-modularis/-/eslint-config-modularis-1.0.0.tgz#86d008adc7284824a70686efd113bff7d9ec43f4"
+eslint-config-modularis@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-modularis/-/eslint-config-modularis-2.0.0.tgz#a9ad74d4412eae1cae366475c96d47652cdf861c"
 
 eslint-import-resolver-node@^0.2.0:
   version "0.2.3"
