@@ -40,15 +40,15 @@ export default class CssSelectorExtract {
    * @return {Function} PostCSS plugin.
    */
   postcssSelectorExtract(selectorFilters = []) {
-    return postcss.plugin('postcss-extract-selectors', () => (nodes) => {
+    return postcss.plugin(`postcss-extract-selectors`, () => (nodes) => {
       nodes.walkRules((rule) => {
         // Split combined selectors into an array.
         let ruleSelectors = rule.selector
-          .split(',')
-          .map((ruleSelector) => ruleSelector.replace(/(\r\n|\n|\r)/gm, '').trim());
+          .split(`,`)
+          .map((ruleSelector) => ruleSelector.replace(/(\r\n|\n|\r)/gm, ``).trim());
 
         ruleSelectors = ruleSelectors.map((ruleSelector) => {
-          let newSelector = '';
+          let newSelector = ``;
 
           selectorFilters.some((selectorFilter) => {
             const selector = selectorFilter.selector || selectorFilter;
@@ -71,7 +71,7 @@ export default class CssSelectorExtract {
         }).filter((ruleSelector) => ruleSelector.length > 0 || false);
 
         if (ruleSelectors.length) {
-          rule.selector = ruleSelectors.join(',');
+          rule.selector = ruleSelectors.join(`,`);
         } else {
           // Remove the rule.
           rule.remove();
