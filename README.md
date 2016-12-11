@@ -71,7 +71,7 @@ var cssSelectorExtract = require('css-selector-extract');
 var postcssScss = require('postcss-scss');
 
 var css = '.nested { .selector { } }';
-var selectorFilters = ['.nested', '.selector'];
+var selectorFilters = ['.nested'];
 
 // Add the postcss syntax plugin as third parameter.
 cssSelectorExtract.process(css, selectorFilters, postcssScss).then((extractedCss) => {

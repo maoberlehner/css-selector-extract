@@ -3,3 +3,21 @@
     content: 'nested test selector';
   }
 }
+
+.nest,.commma-nest-test {
+  .nested-test-selector {
+    content: 'nested comma test selector';
+  }
+}
+
+.replaced-nest-test {
+  .nested-test-selector {
+    content: 'nested replace test selector';
+  }
+}
+
+.nest {
+  &,&::before {
+    content: 'nested stuff';
+  }
+}

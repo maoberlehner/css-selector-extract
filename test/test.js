@@ -5,6 +5,88 @@ const expect = require(`chai`).expect;
 const fs = require(`fs`);
 const postcssScssSyntax = require(`postcss-scss`);
 
+const filterSelector = require(`../dist/lib/filter-selector.js`);
+const postcssSelectorExtract = require(`../dist/lib/postcss-selector-extract.js`);
+
+/** @test {filterSelector} */
+describe(`filterSelector()`, () => {
+  it(`should be a function`, () => {
+    expect(typeof filterSelector).to.equal(`function`);
+  });
+
+  it(`should return a empty selector because the rule selector is not whitelisted`, () => {
+    const ruleSelector = `.some-selector`;
+    const ruleParentSelectors = [];
+    const selectorFilters = [`.some-other-selector`];
+
+    expect(filterSelector(ruleSelector, ruleParentSelectors, selectorFilters))
+      .to.equal(``);
+  });
+
+  it(`should return the rule selector because it is whitelisted`, () => {
+    const ruleSelector = `.some-selector`;
+    const ruleParentSelectors = [];
+    const selectorFilters = [`.some-selector`];
+
+    expect(filterSelector(ruleSelector, ruleParentSelectors, selectorFilters))
+      .to.equal(ruleSelector);
+  });
+
+  it(`should return the rule selector because it is whitelisted (RegEx)`, () => {
+    const ruleSelector = `.some-selector`;
+    const ruleParentSelectors = [];
+    const selectorFilters = [/\.some-selector/];
+
+    expect(filterSelector(ruleSelector, ruleParentSelectors, selectorFilters))
+      .to.equal(ruleSelector);
+  });
+
+  it(`should return the rule selector because the parent is whitelisted`, () => {
+    const ruleSelector = `.some-selector`;
+    const ruleParentSelectors = [`.some-other-selector`];
+    const selectorFilters = [`.some-other-selector`];
+
+    expect(filterSelector(ruleSelector, ruleParentSelectors, selectorFilters))
+      .to.equal(ruleSelector);
+  });
+
+  it(`should return the rule selector because the parent is whitelisted (RegEx)`, () => {
+    const ruleSelector = `.some-selector`;
+    const ruleParentSelectors = [`.some-other-selector`];
+    const selectorFilters = [/\.some-other-selector/];
+
+    expect(filterSelector(ruleSelector, ruleParentSelectors, selectorFilters))
+      .to.equal(ruleSelector);
+  });
+
+  it(`should return the rule selector because the replaced parent is whitelisted`, () => {
+    const ruleSelector = `.some-selector`;
+    const ruleParentSelectors = [`.some-other-replaced-selector`];
+    const selectorFilters = [{
+      selector: `.some-other-selector`,
+      replacement: `.some-other-replaced-selector`
+    }];
+
+    expect(filterSelector(ruleSelector, ruleParentSelectors, selectorFilters))
+      .to.equal(ruleSelector);
+  });
+});
+
+/** @test {postcssSelectorExtract} */
+describe(`postcssSelectorExtract()`, () => {
+  it(`should be a function`, () => {
+    expect(typeof postcssSelectorExtract).to.equal(`function`);
+  });
+
+  it(`should return a postcss plugin named "postcss-extract-selectors"`, () => {
+    // eslint-disable-next-line no-unused-expressions
+    expect(postcssSelectorExtract().postcss)
+      .to.not.be.undefined;
+    expect(postcssSelectorExtract().postcss.postcssPlugin)
+      .to.equal(`postcss-extract-selectors`);
+  });
+});
+
 /** @test {CssSelectorExtract} */
 describe(`CssSelectorExtract`, () => {
   const css = fs.readFileSync(`test/css/test.css`, { encoding: `utf8` });
@@ -76,9 +158,16 @@ describe(`CssSelectorExtract`, () => {
         });
     });
 
-    it(`SCSS: correct way to extract nested selector - should return filtered selector`, () => { // eslint-disable-line max-len
+    it(`SCSS: extract multiple instances of a selector with nested child selectors - should return the selectors with all nested selectors`, () => { // eslint-disable-line max-len
       const referenceScss = fs.readFileSync(`test/css/reference/test5.scss`, { encoding: `utf8` });
-      const selectorFilters = [`.nest`, `.nested-test-selector`];
+      const selectorFilters = [
+        `.nest`,
+        `.commma-nest-test`,
+        {
+          selector: `.replace-nest-test`,
+          replacement: `.replaced-nest-test`
+        }
+      ];
       return cssSelectorExtract.process(scss, selectorFilters, postcssScssSyntax)
         .then((extractCss) => {
           expect(extractCss.trim()).to.equal(referenceScss.trim());
@@ -156,21 +245,6 @@ describe(`CssSelectorExtract`, () => {
   describe(`processSync()`, () => {
     it(`should be a function`, () => {
       expect(typeof cssSelectorExtract.processSync).to.equal(`function`);
-    });
-  });
-
-  /** @test {CssSelectorExtract#postcssSelectorExtract} */
-  describe(`postcssSelectorExtract()`, () => {
-    it(`should be a function`, () => {
-      expect(typeof cssSelectorExtract.prototype.postcssSelectorExtract).to.equal(`function`);
-    });
-
-    it(`should return a postcss plugin named "postcss-extract-selectors"`, () => {
-      // eslint-disable-next-line no-unused-expressions
-      expect(cssSelectorExtract.prototype.postcssSelectorExtract().postcss)
-        .to.not.be.undefined;
-      expect(cssSelectorExtract.prototype.postcssSelectorExtract().postcss.postcssPlugin)
-        .to.equal(`postcss-extract-selectors`);
     });
   });
 });
