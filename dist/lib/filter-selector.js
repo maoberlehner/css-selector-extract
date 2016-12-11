@@ -29,7 +29,9 @@ function filterSelector(ruleSelector, ruleParentSelectors, selectorFilters) {
         ruleSelector.replace(selector, replacementSelector) :
         ruleSelector;
 
-      return true;
+      // Do not stop iterating over the selector filters if the parent selector was matched
+      // because child selectors may get replaced in a further iteration.
+      if (!parentSelectorIsEqual) { return true; }
     }
     return false;
   });
