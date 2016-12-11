@@ -77,36 +77,4 @@ function postcssSelectorExtract(selectorFilters) {
   }; });
 }
 
-/**
- * CssSelectorExtract
- */
-var CssSelectorExtract = function CssSelectorExtract () {};
-
-CssSelectorExtract.process = function process (css, selectorFilters, postcssSyntax) {
-    if ( postcssSyntax === void 0 ) postcssSyntax = undefined;
-
-  return new Promise(function (resolve) {
-    var result = CssSelectorExtract.processSync(
-      css,
-      selectorFilters,
-      postcssSyntax
-    );
-    resolve(result);
-  });
-};
-
-/**
- * Synchronously extract and replace CSS selectors from a string.
- * @param {string} css - CSS code.
- * @param {Array} selectorFilters - Array of selector filter objects or selectors.
- * @param {Object} postcssSyntax - PostCSS syntax plugin.
- * @return {string} Extracted selectors.
- */
-CssSelectorExtract.processSync = function processSync (css, selectorFilters, postcssSyntax) {
-    if ( postcssSyntax === void 0 ) postcssSyntax = undefined;
-
-  return postcss(postcssSelectorExtract(selectorFilters))
-    .process(css, { syntax: postcssSyntax }).css;
-};
-
-module.exports = CssSelectorExtract;
+module.exports = postcssSelectorExtract;

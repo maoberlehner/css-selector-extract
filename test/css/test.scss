@@ -4,6 +4,26 @@
   }
 }
 
+.nest,
+.commma-nest-test {
+  .nested-test-selector {
+    content: 'nested comma test selector';
+  }
+}
+
+.replace-nest-test {
+  .nested-test-selector {
+    content: 'nested replace test selector';
+  }
+}
+
+.nest {
+  &,
+  &::before {
+    content: 'nested stuff';
+  }
+}
+
 .media-query-in-test-selector {
   @media (min-width: 30em) {
     content: 'media query in test selector';
