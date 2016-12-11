@@ -166,6 +166,10 @@ describe(`CssSelectorExtract`, () => {
         {
           selector: `.replace-nest-test`,
           replacement: `.replaced-nest-test`
+        },
+        {
+          selector: `.replace-nested-test-selector`,
+          replacement: `.replaced-nested-test-selector`
         }
       ];
       return cssSelectorExtract.process(scss, selectorFilters, postcssScssSyntax)
