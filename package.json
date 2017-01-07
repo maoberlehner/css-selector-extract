@@ -1,6 +1,6 @@
 {
   "name": "css-selector-extract",
-  "description": "Extract certain CSS selectors form (S)CSS code",
+  "description": "Extract certain CSS selectors form CSS code",
   "keywords": [
     "CSS"
   ],
