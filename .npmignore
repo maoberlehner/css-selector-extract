@@ -1,8 +1,11 @@
 .editorconfig
 .esdocrc
 .eslintrc
+.gitattributes
+.travis.yml
 
 CONTRIBUTING.md
 rollup.config.js
+yarn.lock
 
 test
