@@ -64,7 +64,7 @@ describe(`filterSelector()`, () => {
     const ruleParentSelectors = [`.some-other-replaced-selector`];
     const selectorFilters = [{
       selector: `.some-other-selector`,
-      replacement: `.some-other-replaced-selector`
+      replacement: `.some-other-replaced-selector`,
     }];
 
     expect(filterSelector(ruleSelector, ruleParentSelectors, selectorFilters))
@@ -142,7 +142,7 @@ describe(`CssSelectorExtract`, () => {
       const referenceCss = fs.readFileSync(`test/css/reference/test4.css`, { encoding: `utf8` });
       const selectorFilters = [{
         selector: `.test-selector`,
-        replacement: `.test-selector-replaced`
+        replacement: `.test-selector-replaced`,
       }];
       return cssSelectorExtract.process(css, selectorFilters)
         .then((extractCss) => {
@@ -165,12 +165,12 @@ describe(`CssSelectorExtract`, () => {
         `.commma-nest-test`,
         {
           selector: `.replace-nest-test`,
-          replacement: `.replaced-nest-test`
+          replacement: `.replaced-nest-test`,
         },
         {
           selector: `.replace-nested-test-selector`,
-          replacement: `.replaced-nested-test-selector`
-        }
+          replacement: `.replaced-nested-test-selector`,
+        },
       ];
       return cssSelectorExtract.process(scss, selectorFilters, postcssScssSyntax)
         .then((extractCss) => {
@@ -209,7 +209,7 @@ describe(`CssSelectorExtract`, () => {
       const referenceCss = fs.readFileSync(`test/css/reference/test9.css`, { encoding: `utf8` });
       const selectorFilters = [{
         selector: /^\.test-(.+)-(.+).*/,
-        replacement: `.test__$1--$2`
+        replacement: `.test__$1--$2`,
       }];
       return cssSelectorExtract.process(css, selectorFilters)
         .then((extractCss) => {
@@ -219,7 +219,7 @@ describe(`CssSelectorExtract`, () => {
 
     it(`Bootstrap: extract and replace selectors using regular expressions`, () => {
       const bootstrapCss = fs.readFileSync(`node_modules/bootstrap/scss/_alert.scss`, {
-        encoding: `utf8`
+        encoding: `utf8`,
       });
       const referenceCss = fs.readFileSync(`test/css/reference/test10.scss`, { encoding: `utf8` });
       const selectorFilters = [
@@ -227,16 +227,16 @@ describe(`CssSelectorExtract`, () => {
         `.close`,
         {
           selector: `.alert-heading`,
-          replacement: `.alert__heading`
+          replacement: `.alert__heading`,
         },
         {
           selector: `.alert-link`,
-          replacement: `.alert__link`
+          replacement: `.alert__link`,
         },
         {
           selector: /^\.alert-(.+)/,
-          replacement: `.alert--$1`
-        }
+          replacement: `.alert--$1`,
+        },
       ];
       return cssSelectorExtract.process(bootstrapCss, selectorFilters, postcssScssSyntax)
         .then((extractCss) => {

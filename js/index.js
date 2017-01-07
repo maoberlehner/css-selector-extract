@@ -1,6 +1,6 @@
 import postcss from 'postcss';
 
-import postcssSelectorExtract from './lib/postcss-selector-extract.js';
+import postcssSelectorExtract from './lib/postcss-selector-extract';
 
 /**
  * CssSelectorExtract
