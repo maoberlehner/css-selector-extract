@@ -61,9 +61,10 @@ function postcssSelectorExtract(selectorFilters) {
           rule.parent.selector ? rule.parent.selector.split(",") : [],
           selectorFilters
         ); })
-        .filter(function (ruleSelector) { return ruleSelector.length > 0; });
+        .filter(function (ruleSelector) { return ruleSelector.length; });
 
       if (ruleSelectors.length) {
+        // eslint-disable-next-line no-param-reassign
         rule.selector = ruleSelectors.join(",");
       } else {
         rule.remove();
