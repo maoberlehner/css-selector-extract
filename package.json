@@ -19,7 +19,7 @@
     "postcss": "^5.2.8"
   },
   "devDependencies": {
-    "bootstrap": "^4.0.0-alpha.4",
+    "bootstrap": "^4.0.0-alpha.6",
     "chai": "^3.5.0",
     "esdoc": "^0.5.2",
     "eslint": "^3.13.0",
