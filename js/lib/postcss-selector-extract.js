@@ -18,7 +18,7 @@ export default function postcssSelectorExtract(selectorFilters = []) {
           rule.parent.selector ? rule.parent.selector.split(`,`) : [],
           selectorFilters
         ))
-        .filter(ruleSelector => ruleSelector.length > 0);
+        .filter(ruleSelector => ruleSelector.length);
 
       if (ruleSelectors.length) {
         // eslint-disable-next-line no-param-reassign
