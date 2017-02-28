@@ -28,11 +28,9 @@ export default function postcssSelectorExtract(selectorFilters = []) {
       }
     });
 
+    // Remove empty @ rules.
     nodes.walkAtRules((rule) => {
-      // Remove empty @ rules.
-      if (rule.nodes && !rule.nodes.length) {
-        rule.remove();
-      }
+      if (rule.nodes && !rule.nodes.length) rule.remove();
     });
   });
 }

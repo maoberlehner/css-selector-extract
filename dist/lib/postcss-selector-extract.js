@@ -66,11 +66,9 @@ function postcssSelectorExtract() {
         }
       });
 
+      // Remove empty @ rules.
       nodes.walkAtRules(function (rule) {
-        // Remove empty @ rules.
-        if (rule.nodes && !rule.nodes.length) {
-          rule.remove();
-        }
+        if (rule.nodes && !rule.nodes.length) rule.remove();
       });
     };
   });
