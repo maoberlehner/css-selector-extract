@@ -18,7 +18,7 @@ export default class CssSelectorExtract {
       const result = CssSelectorExtract.processSync(
         css,
         selectorFilters,
-        postcssSyntax
+        postcssSyntax,
       );
       resolve(result);
     });

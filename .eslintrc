@@ -1,3 +1,4 @@
 {
-  "extends": "eslint-config-modularis"
+  "parser": "babel-eslint",
+  "extends": "@avalanche/eslint-config"
 }
