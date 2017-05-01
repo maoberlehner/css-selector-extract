@@ -16,7 +16,7 @@ export default function postcssSelectorExtract(selectorFilters = []) {
         .map(ruleSelector => filterSelector(
           ruleSelector,
           rule.parent.selector ? rule.parent.selector.split(`,`) : [],
-          selectorFilters
+          selectorFilters,
         ))
         .filter(ruleSelector => ruleSelector.length);
 
