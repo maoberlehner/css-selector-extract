@@ -1,5 +1,7 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var postcss = _interopDefault(require('postcss'));
@@ -75,40 +77,38 @@ function postcssSelectorExtract() {
 }
 
 /**
+ * Synchronously extract and replace CSS selectors from a string.
+ * @param {string} css - CSS code.
+ * @param {Array} selectorFilters - Array of selector filter objects or selectors.
+ * @param {Object} postcssSyntax - PostCSS syntax plugin.
+ * @return {string} Extracted selectors.
+ */
+var processSync = function processSync(css, selectorFilters, postcssSyntax) {
+  return postcss(postcssSelectorExtract(selectorFilters)).process(css, { syntax: postcssSyntax }).css;
+};
+
+/**
+ * Asynchronously extract and replace CSS selectors from a string.
+ * @param {string} css - CSS code.
+ * @param {Array} selectorFilters - Array of selector filter objects or selectors.
+ * @param {Object} postcssSyntax - PostCSS syntax plugin.
+ * @return {Promise} Promise for a string with the extracted selectors.
+ */
+var process = function process(css, selectorFilters, postcssSyntax) {
+  return new Promise(function (resolve) {
+    var result = processSync(css, selectorFilters, postcssSyntax);
+    resolve(result);
+  });
+};
+
+/**
  * cssSelectorExtract
  */
 var index = {
-  /**
-   * Asynchronously extract and replace CSS selectors from a string.
-   * @param {string} css - CSS code.
-   * @param {Array} selectorFilters - Array of selector filter objects or selectors.
-   * @param {Object} postcssSyntax - PostCSS syntax plugin.
-   * @return {Promise} Promise for a string with the extracted selectors.
-   */
-  process: function process(css, selectorFilters) {
-    var _this = this;
-
-    var postcssSyntax = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
-
-    return new Promise(function (resolve) {
-      var result = _this.processSync(css, selectorFilters, postcssSyntax);
-      resolve(result);
-    });
-  },
-
-
-  /**
-   * Synchronously extract and replace CSS selectors from a string.
-   * @param {string} css - CSS code.
-   * @param {Array} selectorFilters - Array of selector filter objects or selectors.
-   * @param {Object} postcssSyntax - PostCSS syntax plugin.
-   * @return {string} Extracted selectors.
-   */
-  processSync: function processSync(css, selectorFilters) {
-    var postcssSyntax = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
-
-    return postcss(postcssSelectorExtract(selectorFilters)).process(css, { syntax: postcssSyntax }).css;
-  }
+  process: process,
+  processSync: processSync
 };
 
-module.exports = index;
+exports.processSync = processSync;
+exports.process = process;
+exports['default'] = index;

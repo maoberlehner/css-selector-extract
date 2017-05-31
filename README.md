@@ -79,6 +79,25 @@ cssSelectorExtract.process(css, selectorFilters, postcssScss).then((extractedCss
 });
 ```
 
+### ES2015 named exports
+```js
+import { process, processSync } from 'css-selector-extract';
+
+// CSS source code as string.
+const css = '.btn { } .btn-alert { } .btn-success { }';
+// Array of selectors which should get extracted.
+const selectorFilters = ['.btn'];
+
+// Asynchronous:
+process(css, selectorFilters).then((extractedCss) => {
+  console.log(extractedCss); // Outputs: `.btn { }`.
+});
+
+// Synchronous:
+const extractedCss = processSync(css, selectorFilters);
+console.log(extractedCss); // Outputs: `.btn { }`.
+```
+
 ## Development
 See [CONTRIBUTING.md](https://github.com/maoberlehner/css-selector-extract/blob/master/CONTRIBUTING.md)
 
