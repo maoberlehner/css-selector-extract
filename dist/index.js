@@ -8,10 +8,6 @@ var postcss = _interopDefault(require('postcss'));
 
 /**
  * Check if a selector should be whitelisted and / or replaced.
- * @param {string} ruleSelector - The selector to check for whitelisting / replacement.
- * @param {Array} ruleParentSelectors - Array of parent selectors, child selectors get whitelisted.
- * @param {Array} selectorFilters - Array of selector filter objects or selectors.
- * @return {string} Empty string or whitelisted / replaced rule selector.
  */
 function filterSelector(ruleSelector, ruleParentSelectors, selectorFilters) {
   var newSelector = "";
@@ -43,8 +39,6 @@ function filterSelector(ruleSelector, ruleParentSelectors, selectorFilters) {
 
 /**
  * Provide a PostCSS plugin for extracting and replacing CSS selectors.
- * @param {Array} selectorFilters - Array of selector filter objects or selectors.
- * @return {Function} PostCSS plugin.
  */
 function postcssSelectorExtract() {
   var selectorFilters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -78,10 +72,6 @@ function postcssSelectorExtract() {
 
 /**
  * Synchronously extract and replace CSS selectors from a string.
- * @param {string} css - CSS code.
- * @param {Array} selectorFilters - Array of selector filter objects or selectors.
- * @param {Object} postcssSyntax - PostCSS syntax plugin.
- * @return {string} Extracted selectors.
  */
 var processSync = function processSync(css, selectorFilters, postcssSyntax) {
   return postcss(postcssSelectorExtract(selectorFilters)).process(css, { syntax: postcssSyntax }).css;
@@ -89,10 +79,6 @@ var processSync = function processSync(css, selectorFilters, postcssSyntax) {
 
 /**
  * Asynchronously extract and replace CSS selectors from a string.
- * @param {string} css - CSS code.
- * @param {Array} selectorFilters - Array of selector filter objects or selectors.
- * @param {Object} postcssSyntax - PostCSS syntax plugin.
- * @return {Promise} Promise for a string with the extracted selectors.
  */
 var process = function process(css, selectorFilters, postcssSyntax) {
   return new Promise(function (resolve) {

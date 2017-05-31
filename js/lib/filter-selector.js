@@ -1,9 +1,5 @@
 /**
  * Check if a selector should be whitelisted and / or replaced.
- * @param {string} ruleSelector - The selector to check for whitelisting / replacement.
- * @param {Array} ruleParentSelectors - Array of parent selectors, child selectors get whitelisted.
- * @param {Array} selectorFilters - Array of selector filter objects or selectors.
- * @return {string} Empty string or whitelisted / replaced rule selector.
  */
 export default function filterSelector(ruleSelector, ruleParentSelectors, selectorFilters) {
   let newSelector = ``;

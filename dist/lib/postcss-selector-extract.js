@@ -6,10 +6,6 @@ var postcss = _interopDefault(require('postcss'));
 
 /**
  * Check if a selector should be whitelisted and / or replaced.
- * @param {string} ruleSelector - The selector to check for whitelisting / replacement.
- * @param {Array} ruleParentSelectors - Array of parent selectors, child selectors get whitelisted.
- * @param {Array} selectorFilters - Array of selector filter objects or selectors.
- * @return {string} Empty string or whitelisted / replaced rule selector.
  */
 function filterSelector(ruleSelector, ruleParentSelectors, selectorFilters) {
   var newSelector = "";
@@ -41,8 +37,6 @@ function filterSelector(ruleSelector, ruleParentSelectors, selectorFilters) {
 
 /**
  * Provide a PostCSS plugin for extracting and replacing CSS selectors.
- * @param {Array} selectorFilters - Array of selector filter objects or selectors.
- * @return {Function} PostCSS plugin.
  */
 function postcssSelectorExtract() {
   var selectorFilters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];

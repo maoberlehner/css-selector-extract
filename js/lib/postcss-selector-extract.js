@@ -4,8 +4,6 @@ import filterSelector from './filter-selector';
 
 /**
  * Provide a PostCSS plugin for extracting and replacing CSS selectors.
- * @param {Array} selectorFilters - Array of selector filter objects or selectors.
- * @return {Function} PostCSS plugin.
  */
 export default function postcssSelectorExtract(selectorFilters = []) {
   return postcss.plugin(`postcss-extract-selectors`, () => (nodes) => {
