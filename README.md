@@ -111,6 +111,29 @@ const extractedCss = processSync(options);
 console.log(extractedCss); // Outputs: `.btn { }`.
 ```
 
+## Upgrade from 2.x.x to 3.x.x
+With version 3.0.0 css-selector-extract takes an object as it's only parameter.
+
+```js
+var cssSelectorExtract = require('css-selector-extract');
+var postcssScss = require('postcss-scss');
+
+// New way:
+var options = {
+  css: '.btn { } .btn-alert { } .btn-success { }',
+  filters: ['.btn'],
+  postcssSyntax: postcssScss,
+};
+cssSelectorExtract.process(options);
+cssSelectorExtract.processSync(options);
+
+// Old way:
+var css = '.btn { } .btn-alert { } .btn-success { }';
+var selectorFilters = ['.btn'];
+cssSelectorExtract.process(css, selectorFilters, postcssScss);
+cssSelectorExtract.processSync(css, selectorFilters, postcssScss);
+```
+
 ## Development
 See [CONTRIBUTING.md](https://github.com/maoberlehner/css-selector-extract/blob/master/CONTRIBUTING.md)
 
