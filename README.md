@@ -11,7 +11,7 @@ var options = {
   // CSS source code as string.
   css: '.btn { } .btn-alert { } .btn-success { }',
   // Array of selectors which should get extracted.
-  filters: ['.btn'],
+  filters: ['.btn']
 };
 
 // Asynchronous:
@@ -33,7 +33,7 @@ var options = {
   css: '.btn { } .btn-alert { } .btn-success { }',
   // Array of selector filter objects with selectors
   // which should get extracted and replaced.
-  filters: [{ selector: '.btn', replacement: '.button' }],
+  filters: [{ selector: '.btn', replacement: '.button' }]
 };
 
 // Asynchronous:
@@ -49,7 +49,7 @@ var cssSelectorExtract = require('css-selector-extract');
 
 var options = {
   css: '.btn { } .btn-alert { }',
-  filters: [/^\..+-alert/],
+  filters: [/^\..+-alert/]
 };
 
 cssSelectorExtract.process(options).then((extractedCss) => {
@@ -63,7 +63,7 @@ var cssSelectorExtract = require('css-selector-extract');
 
 var options = {
   css: '.btn { } .btn-alert { }',
-  filters: [{ selector: /^\.btn(.*)/, replacement: '.button$1' }],
+  filters: [{ selector: /^\.btn(.*)/, replacement: '.button$1' }]
 };
 
 cssSelectorExtract.process(options).then((extractedCss) => {
@@ -81,7 +81,7 @@ var postcssScss = require('postcss-scss');
 var options = {
   css: '.nested { .selector { } }',
   filters: ['.nested'],
-  postcssSyntax: postcssScss,
+  postcssSyntax: postcssScss
 };
 
 // Add the postcss syntax plugin as third parameter.
@@ -98,7 +98,7 @@ var options = {
   // CSS source code as string.
   css: '.btn { } .btn-alert { } .btn-success { }',
   // Array of selectors which should get extracted.
-  filters: ['.btn'],
+  filters: ['.btn']
 };
 
 // Asynchronous:
@@ -122,7 +122,7 @@ var postcssScss = require('postcss-scss');
 var options = {
   css: '.btn { } .btn-alert { } .btn-success { }',
   filters: ['.btn'],
-  postcssSyntax: postcssScss,
+  postcssSyntax: postcssScss
 };
 cssSelectorExtract.process(options);
 cssSelectorExtract.processSync(options);
