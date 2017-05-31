@@ -4,20 +4,18 @@ import filterSelector from './filter-selector';
 
 /**
  * Provide a PostCSS plugin for extracting and replacing CSS selectors.
- * @param {Array} selectorFilters - Array of selector filter objects or selectors.
- * @return {Function} PostCSS plugin.
  */
-export default function postcssSelectorExtract(selectorFilters = []) {
+export default function postcssSelectorExtract(filters = []) {
   return postcss.plugin(`postcss-extract-selectors`, () => (nodes) => {
     nodes.walkRules((rule) => {
       const ruleSelectors = rule.selector
         .split(`,`)
         .map(ruleSelector => ruleSelector.replace(/(\r\n|\n|\r)/gm, ``).trim())
-        .map(ruleSelector => filterSelector(
+        .map(ruleSelector => filterSelector({
           ruleSelector,
-          rule.parent.selector ? rule.parent.selector.split(`,`) : [],
-          selectorFilters,
-        ))
+          ruleParentSelectors: rule.parent.selector ? rule.parent.selector.split(`,`) : [],
+          filters,
+        }))
         .filter(ruleSelector => ruleSelector.length);
 
       if (ruleSelectors.length) {

@@ -6,15 +6,15 @@ var postcss = _interopDefault(require('postcss'));
 
 /**
  * Check if a selector should be whitelisted and / or replaced.
- * @param {string} ruleSelector - The selector to check for whitelisting / replacement.
- * @param {Array} ruleParentSelectors - Array of parent selectors, child selectors get whitelisted.
- * @param {Array} selectorFilters - Array of selector filter objects or selectors.
- * @return {string} Empty string or whitelisted / replaced rule selector.
  */
-function filterSelector(ruleSelector, ruleParentSelectors, selectorFilters) {
+function filterSelector(_ref) {
+  var ruleSelector = _ref.ruleSelector,
+      ruleParentSelectors = _ref.ruleParentSelectors,
+      filters = _ref.filters;
+
   var newSelector = "";
 
-  selectorFilters.some(function (selectorFilter) {
+  filters.some(function (selectorFilter) {
     var selector = selectorFilter.selector || selectorFilter;
     var replacementSelector = selectorFilter.replacement;
     var parentComparisonSelector = replacementSelector || selector;
@@ -41,11 +41,9 @@ function filterSelector(ruleSelector, ruleParentSelectors, selectorFilters) {
 
 /**
  * Provide a PostCSS plugin for extracting and replacing CSS selectors.
- * @param {Array} selectorFilters - Array of selector filter objects or selectors.
- * @return {Function} PostCSS plugin.
  */
 function postcssSelectorExtract() {
-  var selectorFilters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
   return postcss.plugin('postcss-extract-selectors', function () {
     return function (nodes) {
@@ -53,7 +51,11 @@ function postcssSelectorExtract() {
         var ruleSelectors = rule.selector.split(',').map(function (ruleSelector) {
           return ruleSelector.replace(/(\r\n|\n|\r)/gm, '').trim();
         }).map(function (ruleSelector) {
-          return filterSelector(ruleSelector, rule.parent.selector ? rule.parent.selector.split(',') : [], selectorFilters);
+          return filterSelector({
+            ruleSelector: ruleSelector,
+            ruleParentSelectors: rule.parent.selector ? rule.parent.selector.split(',') : [],
+            filters: filters
+          });
         }).filter(function (ruleSelector) {
           return ruleSelector.length;
         });
