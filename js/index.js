@@ -3,9 +3,9 @@ import postcss from 'postcss';
 import postcssSelectorExtract from './lib/postcss-selector-extract';
 
 /**
- * CssSelectorExtract
+ * cssSelectorExtract
  */
-export default class CssSelectorExtract {
+export default {
   /**
    * Asynchronously extract and replace CSS selectors from a string.
    * @param {string} css - CSS code.
@@ -13,16 +13,16 @@ export default class CssSelectorExtract {
    * @param {Object} postcssSyntax - PostCSS syntax plugin.
    * @return {Promise} Promise for a string with the extracted selectors.
    */
-  static process(css, selectorFilters, postcssSyntax = undefined) {
+  process(css, selectorFilters, postcssSyntax = undefined) {
     return new Promise((resolve) => {
-      const result = CssSelectorExtract.processSync(
+      const result = this.processSync(
         css,
         selectorFilters,
         postcssSyntax,
       );
       resolve(result);
     });
-  }
+  },
 
   /**
    * Synchronously extract and replace CSS selectors from a string.
@@ -31,8 +31,8 @@ export default class CssSelectorExtract {
    * @param {Object} postcssSyntax - PostCSS syntax plugin.
    * @return {string} Extracted selectors.
    */
-  static processSync(css, selectorFilters, postcssSyntax = undefined) {
+  processSync(css, selectorFilters, postcssSyntax = undefined) {
     return postcss(postcssSelectorExtract(selectorFilters))
       .process(css, { syntax: postcssSyntax }).css;
-  }
-}
+  },
+};

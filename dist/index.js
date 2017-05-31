@@ -74,56 +74,41 @@ function postcssSelectorExtract() {
   });
 }
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 /**
- * CssSelectorExtract
+ * cssSelectorExtract
  */
+var index = {
+  /**
+   * Asynchronously extract and replace CSS selectors from a string.
+   * @param {string} css - CSS code.
+   * @param {Array} selectorFilters - Array of selector filter objects or selectors.
+   * @param {Object} postcssSyntax - PostCSS syntax plugin.
+   * @return {Promise} Promise for a string with the extracted selectors.
+   */
+  process: function process(css, selectorFilters) {
+    var _this = this;
 
-var CssSelectorExtract = function () {
-  function CssSelectorExtract() {
-    _classCallCheck(this, CssSelectorExtract);
+    var postcssSyntax = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
+
+    return new Promise(function (resolve) {
+      var result = _this.processSync(css, selectorFilters, postcssSyntax);
+      resolve(result);
+    });
+  },
+
+
+  /**
+   * Synchronously extract and replace CSS selectors from a string.
+   * @param {string} css - CSS code.
+   * @param {Array} selectorFilters - Array of selector filter objects or selectors.
+   * @param {Object} postcssSyntax - PostCSS syntax plugin.
+   * @return {string} Extracted selectors.
+   */
+  processSync: function processSync(css, selectorFilters) {
+    var postcssSyntax = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
+
+    return postcss(postcssSelectorExtract(selectorFilters)).process(css, { syntax: postcssSyntax }).css;
   }
+};
 
-  _createClass(CssSelectorExtract, null, [{
-    key: 'process',
-
-    /**
-     * Asynchronously extract and replace CSS selectors from a string.
-     * @param {string} css - CSS code.
-     * @param {Array} selectorFilters - Array of selector filter objects or selectors.
-     * @param {Object} postcssSyntax - PostCSS syntax plugin.
-     * @return {Promise} Promise for a string with the extracted selectors.
-     */
-    value: function process(css, selectorFilters) {
-      var postcssSyntax = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
-
-      return new Promise(function (resolve) {
-        var result = CssSelectorExtract.processSync(css, selectorFilters, postcssSyntax);
-        resolve(result);
-      });
-    }
-
-    /**
-     * Synchronously extract and replace CSS selectors from a string.
-     * @param {string} css - CSS code.
-     * @param {Array} selectorFilters - Array of selector filter objects or selectors.
-     * @param {Object} postcssSyntax - PostCSS syntax plugin.
-     * @return {string} Extracted selectors.
-     */
-
-  }, {
-    key: 'processSync',
-    value: function processSync(css, selectorFilters) {
-      var postcssSyntax = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
-
-      return postcss(postcssSelectorExtract(selectorFilters)).process(css, { syntax: postcssSyntax }).css;
-    }
-  }]);
-
-  return CssSelectorExtract;
-}();
-
-module.exports = CssSelectorExtract;
+module.exports = index;
