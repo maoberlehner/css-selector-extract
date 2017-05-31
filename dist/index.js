@@ -9,10 +9,14 @@ var postcss = _interopDefault(require('postcss'));
 /**
  * Check if a selector should be whitelisted and / or replaced.
  */
-function filterSelector(ruleSelector, ruleParentSelectors, selectorFilters) {
+function filterSelector(_ref) {
+  var ruleSelector = _ref.ruleSelector,
+      ruleParentSelectors = _ref.ruleParentSelectors,
+      filters = _ref.filters;
+
   var newSelector = "";
 
-  selectorFilters.some(function (selectorFilter) {
+  filters.some(function (selectorFilter) {
     var selector = selectorFilter.selector || selectorFilter;
     var replacementSelector = selectorFilter.replacement;
     var parentComparisonSelector = replacementSelector || selector;
@@ -41,7 +45,7 @@ function filterSelector(ruleSelector, ruleParentSelectors, selectorFilters) {
  * Provide a PostCSS plugin for extracting and replacing CSS selectors.
  */
 function postcssSelectorExtract() {
-  var selectorFilters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
   return postcss.plugin('postcss-extract-selectors', function () {
     return function (nodes) {
@@ -49,7 +53,11 @@ function postcssSelectorExtract() {
         var ruleSelectors = rule.selector.split(',').map(function (ruleSelector) {
           return ruleSelector.replace(/(\r\n|\n|\r)/gm, '').trim();
         }).map(function (ruleSelector) {
-          return filterSelector(ruleSelector, rule.parent.selector ? rule.parent.selector.split(',') : [], selectorFilters);
+          return filterSelector({
+            ruleSelector: ruleSelector,
+            ruleParentSelectors: rule.parent.selector ? rule.parent.selector.split(',') : [],
+            filters: filters
+          });
         }).filter(function (ruleSelector) {
           return ruleSelector.length;
         });
@@ -73,16 +81,19 @@ function postcssSelectorExtract() {
 /**
  * Synchronously extract and replace CSS selectors from a string.
  */
-var processSync = function processSync(css, selectorFilters, postcssSyntax) {
-  return postcss(postcssSelectorExtract(selectorFilters)).process(css, { syntax: postcssSyntax }).css;
+var processSync = function processSync(_ref) {
+  var css = _ref.css,
+      filters = _ref.filters,
+      postcssSyntax = _ref.postcssSyntax;
+  return postcss(postcssSelectorExtract(filters)).process(css, { syntax: postcssSyntax }).css;
 };
 
 /**
  * Asynchronously extract and replace CSS selectors from a string.
  */
-var process = function process(css, selectorFilters, postcssSyntax) {
+var process = function process(options) {
   return new Promise(function (resolve) {
-    var result = processSync(css, selectorFilters, postcssSyntax);
+    var result = processSync(options);
     resolve(result);
   });
 };

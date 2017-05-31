@@ -3,10 +3,14 @@
 /**
  * Check if a selector should be whitelisted and / or replaced.
  */
-function filterSelector(ruleSelector, ruleParentSelectors, selectorFilters) {
+function filterSelector(_ref) {
+  var ruleSelector = _ref.ruleSelector,
+      ruleParentSelectors = _ref.ruleParentSelectors,
+      filters = _ref.filters;
+
   var newSelector = "";
 
-  selectorFilters.some(function (selectorFilter) {
+  filters.some(function (selectorFilter) {
     var selector = selectorFilter.selector || selectorFilter;
     var replacementSelector = selectorFilter.replacement;
     var parentComparisonSelector = replacementSelector || selector;

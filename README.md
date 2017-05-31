@@ -7,18 +7,20 @@ With selector extracting, it is possible to extract certain CSS selectors (RegEx
 ```js
 var cssSelectorExtract = require('css-selector-extract');
 
-// CSS source code as string.
-var css = '.btn { } .btn-alert { } .btn-success { }';
-// Array of selectors which should get extracted.
-var selectorFilters = ['.btn'];
+var options = {
+  // CSS source code as string.
+  css: '.btn { } .btn-alert { } .btn-success { }',
+  // Array of selectors which should get extracted.
+  filters: ['.btn'],
+};
 
 // Asynchronous:
-cssSelectorExtract.process(css, selectorFilters).then((extractedCss) => {
+cssSelectorExtract.process(options).then((extractedCss) => {
   console.log(extractedCss); // Outputs: `.btn { }`.
 });
 
 // Synchronous:
-var extractedCss = cssSelectorExtract.processSync(css, selectorFilters);
+var extractedCss = cssSelectorExtract.processSync(options);
 console.log(extractedCss); // Outputs: `.btn { }`.
 ```
 
@@ -26,14 +28,16 @@ console.log(extractedCss); // Outputs: `.btn { }`.
 ```js
 var cssSelectorExtract = require('css-selector-extract');
 
-// CSS source code as string.
-var css = '.btn { } .btn-alert { } .btn-success { }';
-// Array of selector filter objects with selectors
-// which should get extracted and replaced.
-var selectorFilters = [{ selector: '.btn', replacement: '.button' }];
+var options = {
+  // CSS source code as string.
+  css: '.btn { } .btn-alert { } .btn-success { }',
+  // Array of selector filter objects with selectors
+  // which should get extracted and replaced.
+  filters: [{ selector: '.btn', replacement: '.button' }],
+};
 
 // Asynchronous:
-cssSelectorExtract.process(css, selectorFilters).then((extractedCss) => {
+cssSelectorExtract.process(options).then((extractedCss) => {
   console.log(extractedCss); // Outputs: `.button { }`.
 });
 ```
@@ -43,10 +47,12 @@ cssSelectorExtract.process(css, selectorFilters).then((extractedCss) => {
 ```js
 var cssSelectorExtract = require('css-selector-extract');
 
-var css = '.btn { } .btn-alert { }';
-var selectorFilters = [/^\..+-alert/];
+var options = {
+  css: '.btn { } .btn-alert { }',
+  filters: [/^\..+-alert/],
+};
 
-cssSelectorExtract.process(css, selectorFilters).then((extractedCss) => {
+cssSelectorExtract.process(options).then((extractedCss) => {
   console.log(extractedCss); // Outputs: `.btn-alert { }`.
 });
 ```
@@ -55,10 +61,12 @@ cssSelectorExtract.process(css, selectorFilters).then((extractedCss) => {
 ```js
 var cssSelectorExtract = require('css-selector-extract');
 
-var css = '.btn { } .btn-alert { }';
-var selectorFilters = [{ selector: /^\.btn(.*)/, replacement: '.button$1' }];
+var options = {
+  css: '.btn { } .btn-alert { }',
+  filters: [{ selector: /^\.btn(.*)/, replacement: '.button$1' }],
+};
 
-cssSelectorExtract.process(css, selectorFilters).then((extractedCss) => {
+cssSelectorExtract.process(options).then((extractedCss) => {
   console.log(extractedCss); // Outputs: `.button { } .button-alert { }`.
 });
 ```
@@ -70,11 +78,14 @@ Install the corresponding postcss syntax plugin (e.g. [postcss-scss](https://www
 var cssSelectorExtract = require('css-selector-extract');
 var postcssScss = require('postcss-scss');
 
-var css = '.nested { .selector { } }';
-var selectorFilters = ['.nested'];
+var options = {
+  css: '.nested { .selector { } }',
+  filters: ['.nested'],
+  postcssSyntax: postcssScss,
+};
 
 // Add the postcss syntax plugin as third parameter.
-cssSelectorExtract.process(css, selectorFilters, postcssScss).then((extractedCss) => {
+cssSelectorExtract.process(options).then((extractedCss) => {
   console.log(extractedCss);
 });
 ```
@@ -83,18 +94,20 @@ cssSelectorExtract.process(css, selectorFilters, postcssScss).then((extractedCss
 ```js
 import { process, processSync } from 'css-selector-extract';
 
-// CSS source code as string.
-const css = '.btn { } .btn-alert { } .btn-success { }';
-// Array of selectors which should get extracted.
-const selectorFilters = ['.btn'];
+var options = {
+  // CSS source code as string.
+  css: '.btn { } .btn-alert { } .btn-success { }',
+  // Array of selectors which should get extracted.
+  filters: ['.btn'],
+};
 
 // Asynchronous:
-process(css, selectorFilters).then((extractedCss) => {
+process(options).then((extractedCss) => {
   console.log(extractedCss); // Outputs: `.btn { }`.
 });
 
 // Synchronous:
-const extractedCss = processSync(css, selectorFilters);
+const extractedCss = processSync(options);
 console.log(extractedCss); // Outputs: `.btn { }`.
 ```
 
