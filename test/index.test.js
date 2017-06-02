@@ -11,7 +11,7 @@ describe(`cssSelectorExtract`, () => {
   const scss = fs.readFileSync(`test/css/test.scss`, { encoding: `utf8` });
   const scssSyntaxTest = fs.readFileSync(`test/css/scss-syntax-test.scss`, { encoding: `utf8` });
 
-  it(`should be a function`, () => {
+  it(`should be a object`, () => {
     expect(typeof cssSelectorExtract).to.equal(`object`);
   });
 
