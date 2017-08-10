@@ -1,7 +1,6 @@
-/* eslint-env node, mocha */
-import { expect } from 'chai';
+const expect = require(`chai`).expect;
 
-import filterSelector from '../../js/lib/filter-selector';
+const filterSelector = require(`../../dist/lib/filter-selector`);
 
 /** @test {filterSelector} */
 describe(`filterSelector()`, () => {

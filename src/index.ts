@@ -1,6 +1,8 @@
-import postcss from 'postcss';
+import * as postcss from 'postcss';
 
-import postcssSelectorExtract from './lib/postcss-selector-extract';
+import postcssSelectorExtract = require('./lib/postcss-selector-extract');
+
+import { IProcessOptions } from './interfaces/IProcessOptions';
 
 /**
  * Synchronously extract and replace CSS selectors from a string.
@@ -9,13 +11,13 @@ export const processSync = ({
   css,
   filters,
   postcssSyntax,
-}) => postcss(postcssSelectorExtract(filters))
+}: IProcessOptions) => postcss(postcssSelectorExtract(filters))
   .process(css, { syntax: postcssSyntax }).css;
 
 /**
  * Asynchronously extract and replace CSS selectors from a string.
  */
-export const process = options => new Promise((resolve) => {
+export const process = (options: IProcessOptions) => new Promise((resolve) => {
   const result = processSync(options);
   resolve(result);
 });
