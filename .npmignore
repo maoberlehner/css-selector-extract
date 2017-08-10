@@ -1,10 +1,9 @@
+test
+
 .editorconfig
-.eslintrc
-.gitattributes
 .travis.yml
 
 CHANGELOG.md
 CONTRIBUTING.md
-rollup.config.js
-
-test
+tsconfig.json
+tslint.json

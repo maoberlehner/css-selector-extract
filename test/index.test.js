@@ -1,9 +1,10 @@
-/* eslint-env node, mocha */
-import fs from 'fs';
-import postcssSyntax from 'postcss-scss';
-import { expect } from 'chai';
+const fs = require(`fs`);
+const postcssSyntax = require(`postcss-scss`);
+const expect = require(`chai`).expect;
 
-import cssSelectorExtract, { process, processSync } from '../js/index';
+const cssSelectorExtract = require(`../`);
+const process = require(`../`).process;
+const processSync = require(`../`).processSync;
 
 /** @test {cssSelectorExtract} */
 describe(`cssSelectorExtract`, () => {
@@ -11,7 +12,7 @@ describe(`cssSelectorExtract`, () => {
   const scss = fs.readFileSync(`test/css/test.scss`, { encoding: `utf8` });
   const scssSyntaxTest = fs.readFileSync(`test/css/scss-syntax-test.scss`, { encoding: `utf8` });
 
-  it(`should be a function`, () => {
+  it(`should be a object`, () => {
     expect(typeof cssSelectorExtract).to.equal(`object`);
   });
 
@@ -30,7 +31,7 @@ describe(`cssSelectorExtract`, () => {
         });
     });
 
-    it(`CSS: correct way to extract nested selector - should return filtered selector`, () => { // eslint-disable-line max-len
+    it(`CSS: correct way to extract nested selector - should return filtered selector`, () => {
       const referenceCss = fs.readFileSync(`test/css/reference/test2.css`, { encoding: `utf8` });
       const filters = [`.nest .nested-test-selector`];
       return process({ css, filters })
@@ -47,7 +48,7 @@ describe(`cssSelectorExtract`, () => {
         });
     });
 
-    it(`CSS: correct way to extract @media nested selector - should return filtered selector`, () => { // eslint-disable-line max-len
+    it(`CSS: correct way to extract @media nested selector - should return filtered selector`, () => {
       const referenceCss = fs.readFileSync(`test/css/reference/test3.css`, { encoding: `utf8` });
       const filters = [`.nested-in-media-query`];
       return process({ css, filters })
@@ -76,7 +77,7 @@ describe(`cssSelectorExtract`, () => {
         });
     });
 
-    it(`SCSS: extract multiple instances of a selector with nested child selectors - should return the selectors with all nested selectors`, () => { // eslint-disable-line max-len
+    it(`SCSS: extract multiple instances of a selector with nested child selectors - should return the selectors with all nested selectors`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/test5.scss`, { encoding: `utf8` });
       const filters = [
         `.nest`,
@@ -96,7 +97,7 @@ describe(`cssSelectorExtract`, () => {
         });
     });
 
-    it(`SCSS: correct way to extract @media nested selector - should return filtered selector`, () => { // eslint-disable-line max-len
+    it(`SCSS: correct way to extract @media nested selector - should return filtered selector`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/test6.scss`, { encoding: `utf8` });
       const filters = [`.media-query-in-test-selector`];
       return process({ css: scss, filters, postcssSyntax })
