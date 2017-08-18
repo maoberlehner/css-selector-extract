@@ -4,6 +4,7 @@ test
 .travis.yml
 
 CHANGELOG.md
+CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 tsconfig.json
 tslint.json
