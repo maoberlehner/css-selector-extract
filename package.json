@@ -19,7 +19,7 @@
     "postcss": "^6.0.1"
   },
   "devDependencies": {
-    "bootstrap": "^4.0.0-alpha.6",
+    "bootstrap": "4.0.0-alpha.6",
     "chai": "^4.0.0",
     "mocha": "^3.4.2",
     "postcss-scss": "^1.0.0",
