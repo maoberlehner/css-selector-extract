@@ -7,7 +7,7 @@ import { ISelectorFilter } from '../interfaces/ISelectorFilter';
 /**
  * Provide a PostCSS plugin for extracting and replacing CSS selectors.
  */
-export = function postcssSelectorExtract(filters: ISelectorFilter[]|string[] = []) {
+export = function postcssSelectorExtract(filters: ISelectorFilter[]|string[] = [], preserveLines = false) {
   return postcss.plugin(`postcss-extract-selectors`, () => (nodes) => {
     // We have to force `any` type, because postcss type
     // definitions seem to be outdated.
@@ -25,6 +25,14 @@ export = function postcssSelectorExtract(filters: ISelectorFilter[]|string[] = [
       if (ruleSelectors.length) {
         rule.selector = ruleSelectors.join(`,`);
       } else {
+        if (preserveLines) {
+          const ruleLines = rule.toString().split(/\r\n|\r|\n/).length;
+
+          rule.cloneAfter({
+            type: `comment`,
+            text: `preserve lines${'\n'.repeat(ruleLines - 1)}`,
+          });
+        }
         rule.remove();
       }
     });

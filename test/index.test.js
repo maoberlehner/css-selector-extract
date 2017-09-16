@@ -11,6 +11,7 @@ describe(`cssSelectorExtract`, () => {
   const css = fs.readFileSync(`test/css/test.css`, { encoding: `utf8` });
   const scss = fs.readFileSync(`test/css/test.scss`, { encoding: `utf8` });
   const scssSyntaxTest = fs.readFileSync(`test/css/scss-syntax-test.scss`, { encoding: `utf8` });
+  const scssPreserveLinesTest = fs.readFileSync(`test/css/preserve-lines-test.scss`, { encoding: `utf8` });
 
   it(`should be a object`, () => {
     expect(typeof cssSelectorExtract).to.equal(`object`);
@@ -160,6 +161,15 @@ describe(`cssSelectorExtract`, () => {
       return process({ css: bootstrapCss, filters, postcssSyntax })
         .then((extractCss) => {
           expect(extractCss.trim()).to.equal(referenceCss.trim());
+        });
+    });
+
+    it(`Extract selectors but preserve lines`, () => {
+      const referenceScss = fs.readFileSync(`test/css/reference/test11.scss`, { encoding: `utf8` });
+      const filters = [`.selector2`, `.selector4`];
+      return process({ css: scssPreserveLinesTest, filters, preserveLines: true })
+        .then((extractScss) => {
+          expect(extractScss.trim()).to.equal(referenceScss.trim());
         });
     });
   });

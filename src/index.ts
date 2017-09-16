@@ -11,7 +11,8 @@ export const processSync = ({
   css,
   filters,
   postcssSyntax,
-}: IProcessOptions) => postcss(postcssSelectorExtract(filters))
+  preserveLines,
+}: IProcessOptions) => postcss(postcssSelectorExtract(filters, preserveLines))
   .process(css, { syntax: postcssSyntax }).css;
 
 /**

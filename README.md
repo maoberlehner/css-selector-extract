@@ -84,8 +84,26 @@ var options = {
   postcssSyntax: postcssScss
 };
 
-// Add the postcss syntax plugin as third parameter.
 cssSelectorExtract.process(options).then((extractedCss) => {
+  console.log(extractedCss);
+});
+```
+
+### Preserve lines
+Usually `css-selector-extract` removes all nodes which do not match the given selectors. However under some circumstances it might be useful to preserve the original line numbers (e.g. to keep source map references intact).
+
+```js
+var cssSelectorExtract = require('css-selector-extract');
+
+var options = {
+  css: '.multiple { } .selectors {}',
+  filters: ['.some-selector'],
+  preserveLines: true
+};
+
+cssSelectorExtract.process(options).then((extractedCss) => {
+  // Outputs the extracted selector(s) with comments where
+  // other selectors got removed to preserve line numbers.
   console.log(extractedCss);
 });
 ```
