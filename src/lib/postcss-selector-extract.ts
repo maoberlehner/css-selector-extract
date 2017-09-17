@@ -31,6 +31,7 @@ export = function postcssSelectorExtract(filters: ISelectorFilter[]|string[] = [
           rule.cloneBefore({
             type: `comment`,
             text: `START preserve lines${'\n'.repeat(ruleLines - 1)}preserve lines END`,
+            raws: Object.assign(rule.raws, { left: ' ', right: ' ' }),
           });
         }
         rule.remove();
