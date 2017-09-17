@@ -13,7 +13,8 @@ export const processSync = ({
   postcssSyntax,
   preserveLines,
 }: IProcessOptions) => postcss(postcssSelectorExtract(filters, preserveLines))
-  .process(css, { syntax: postcssSyntax }).css;
+  .process(css, { syntax: postcssSyntax }).css
+  .replace(/\/\* START preserve lines|preserve lines END \*\//g, ``);
 
 /**
  * Asynchronously extract and replace CSS selectors from a string.
