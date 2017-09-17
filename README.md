@@ -102,7 +102,7 @@ var options = {
 };
 
 cssSelectorExtract.process(options).then((extractedCss) => {
-  // Outputs the extracted selector(s) with comments where
+  // Outputs the extracted selector(s) with empty lines where
   // other selectors got removed to preserve line numbers.
   console.log(extractedCss);
 });

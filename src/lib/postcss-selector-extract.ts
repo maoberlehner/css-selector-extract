@@ -28,9 +28,9 @@ export = function postcssSelectorExtract(filters: ISelectorFilter[]|string[] = [
         if (preserveLines) {
           const ruleLines = rule.toString().split(/\r\n|\r|\n/).length;
 
-          rule.cloneAfter({
+          rule.cloneBefore({
             type: `comment`,
-            text: `preserve lines${'\n'.repeat(ruleLines - 1)}`,
+            text: `START preserve lines${'\n'.repeat(ruleLines - 1)}preserve lines END`,
           });
         }
         rule.remove();
