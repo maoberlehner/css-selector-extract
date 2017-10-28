@@ -23,7 +23,7 @@
     "url": "https://github.com/maoberlehner/css-selector-extract/issues"
   },
   "dependencies": {
-    "postcss": "^6.0.11"
+    "postcss": "^6.0.13"
   },
   "devDependencies": {
     "@types/jest": "^21.1.5",
@@ -32,13 +32,16 @@
     "postcss-scss": "^1.0.2",
     "rimraf": "^2.6.2",
     "ts-jest": "^21.1.4",
-    "tslint": "^5.7.0",
-    "typescript": "^2.5.2"
+    "tslint": "^5.8.0",
+    "typescript": "^2.5.3"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "jest": {
-    "moduleFileExtensions": ["ts", "js"],
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
     "transform": {
       "^.+\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
