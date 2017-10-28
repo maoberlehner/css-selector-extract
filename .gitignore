@@ -25,5 +25,6 @@ nbproject
 Thumbs.db
 
 # Folders to ignore
+coverage
 dist
 node_modules
