@@ -5,9 +5,9 @@ With selector extracting, it is possible to extract certain CSS selectors (RegEx
 
 ## Demos
 ```js
-var cssSelectorExtract = require('css-selector-extract');
+const cssSelectorExtract = require('css-selector-extract');
 
-var options = {
+const options = {
   // CSS source code as string.
   css: '.btn { } .btn-alert { } .btn-success { }',
   // Array of selectors which should get extracted.
@@ -20,15 +20,15 @@ cssSelectorExtract.process(options).then((extractedCss) => {
 });
 
 // Synchronous:
-var extractedCss = cssSelectorExtract.processSync(options);
+const extractedCss = cssSelectorExtract.processSync(options);
 console.log(extractedCss); // Outputs: `.btn { }`.
 ```
 
 ### Rename extracted selectors
 ```js
-var cssSelectorExtract = require('css-selector-extract');
+const cssSelectorExtract = require('css-selector-extract');
 
-var options = {
+const options = {
   // CSS source code as string.
   css: '.btn { } .btn-alert { } .btn-success { }',
   // Array of selector filter objects with selectors
@@ -45,9 +45,9 @@ cssSelectorExtract.process(options).then((extractedCss) => {
 ### RegEx
 #### Filter selectors
 ```js
-var cssSelectorExtract = require('css-selector-extract');
+const cssSelectorExtract = require('css-selector-extract');
 
-var options = {
+const options = {
   css: '.btn { } .btn-alert { }',
   filters: [/^\..+-alert/]
 };
@@ -59,9 +59,9 @@ cssSelectorExtract.process(options).then((extractedCss) => {
 
 #### Replace selectors
 ```js
-var cssSelectorExtract = require('css-selector-extract');
+const cssSelectorExtract = require('css-selector-extract');
 
-var options = {
+const options = {
   css: '.btn { } .btn-alert { }',
   filters: [{ selector: /^\.btn(.*)/, replacement: '.button$1' }]
 };
@@ -75,10 +75,10 @@ cssSelectorExtract.process(options).then((extractedCss) => {
 Install the corresponding postcss syntax plugin (e.g. [postcss-scss](https://www.npmjs.com/package/postcss-scss) or [postcss-less](https://www.npmjs.com/package/postcss-less)).
 
 ```js
-var cssSelectorExtract = require('css-selector-extract');
-var postcssScss = require('postcss-scss');
+const cssSelectorExtract = require('css-selector-extract');
+const postcssScss = require('postcss-scss');
 
-var options = {
+const options = {
   css: '.nested { .selector { } }',
   filters: ['.nested'],
   postcssSyntax: postcssScss
@@ -93,9 +93,9 @@ cssSelectorExtract.process(options).then((extractedCss) => {
 Usually `css-selector-extract` removes all nodes which do not match the given selectors. However under some circumstances it might be useful to preserve the original line numbers (e.g. to keep source map references intact).
 
 ```js
-var cssSelectorExtract = require('css-selector-extract');
+const cssSelectorExtract = require('css-selector-extract');
 
-var options = {
+const options = {
   css: '.multiple { } .selectors {}',
   filters: ['.some-selector'],
   preserveLines: true
@@ -112,7 +112,7 @@ cssSelectorExtract.process(options).then((extractedCss) => {
 ```js
 import { process, processSync } from 'css-selector-extract';
 
-var options = {
+const options = {
   // CSS source code as string.
   css: '.btn { } .btn-alert { } .btn-success { }',
   // Array of selectors which should get extracted.
@@ -133,11 +133,11 @@ console.log(extractedCss); // Outputs: `.btn { }`.
 With version 3.0.0 css-selector-extract takes an object as it's only parameter.
 
 ```js
-var cssSelectorExtract = require('css-selector-extract');
-var postcssScss = require('postcss-scss');
+const cssSelectorExtract = require('css-selector-extract');
+const postcssScss = require('postcss-scss');
 
 // New way:
-var options = {
+const options = {
   css: '.btn { } .btn-alert { } .btn-success { }',
   filters: ['.btn'],
   postcssSyntax: postcssScss
@@ -146,8 +146,8 @@ cssSelectorExtract.process(options);
 cssSelectorExtract.processSync(options);
 
 // Old way:
-var css = '.btn { } .btn-alert { } .btn-success { }';
-var selectorFilters = ['.btn'];
+const css = '.btn { } .btn-alert { } .btn-success { }';
+const selectorFilters = ['.btn'];
 cssSelectorExtract.process(css, selectorFilters, postcssScss);
 cssSelectorExtract.processSync(css, selectorFilters, postcssScss);
 ```

@@ -1,59 +1,56 @@
-const expect = require(`chai`).expect;
+import filterSelector = require('../../src/lib/filter-selector');
 
-const filterSelector = require(`../../dist/lib/filter-selector`);
-
-/** @test {filterSelector} */
 describe(`filterSelector()`, () => {
-  it(`should be a function`, () => {
-    expect(typeof filterSelector).to.equal(`function`);
+  test(`It should be a function.`, () => {
+    expect(typeof filterSelector).toBe(`function`);
   });
 
-  it(`should return a empty selector because the rule selector is not whitelisted`, () => {
+  test(`It should return a empty selector because the rule selector is not whitelisted.`, () => {
     const ruleSelector = `.some-selector`;
     const ruleParentSelectors = [];
     const filters = [`.some-other-selector`];
 
     expect(filterSelector({ ruleSelector, ruleParentSelectors, filters }))
-      .to.equal(``);
+      .toBe(``);
   });
 
-  it(`should return the rule selector because it is whitelisted`, () => {
+  test(`It should return the rule selector because it is whitelisted.`, () => {
     const ruleSelector = `.some-selector`;
     const ruleParentSelectors = [];
     const filters = [`.some-selector`];
 
     expect(filterSelector({ ruleSelector, ruleParentSelectors, filters }))
-      .to.equal(ruleSelector);
+      .toBe(ruleSelector);
   });
 
-  it(`should return the rule selector because it is whitelisted (RegEx)`, () => {
+  test(`It should return the rule selector because it is whitelisted (RegEx).`, () => {
     const ruleSelector = `.some-selector`;
     const ruleParentSelectors = [];
     const filters = [/\.some-selector/];
 
     expect(filterSelector({ ruleSelector, ruleParentSelectors, filters }))
-      .to.equal(ruleSelector);
+      .toBe(ruleSelector);
   });
 
-  it(`should return the rule selector because the parent is whitelisted`, () => {
+  test(`It should return the rule selector because the parent is whitelisted.`, () => {
     const ruleSelector = `.some-selector`;
     const ruleParentSelectors = [`.some-other-selector`];
     const filters = [`.some-other-selector`];
 
     expect(filterSelector({ ruleSelector, ruleParentSelectors, filters }))
-      .to.equal(ruleSelector);
+      .toBe(ruleSelector);
   });
 
-  it(`should return the rule selector because the parent is whitelisted (RegEx)`, () => {
+  test(`It should return the rule selector because the parent is whitelisted (RegEx).`, () => {
     const ruleSelector = `.some-selector`;
     const ruleParentSelectors = [`.some-other-selector`];
     const filters = [/\.some-other-selector/];
 
     expect(filterSelector({ ruleSelector, ruleParentSelectors, filters }))
-      .to.equal(ruleSelector);
+      .toBe(ruleSelector);
   });
 
-  it(`should return the rule selector because the replaced parent is whitelisted`, () => {
+  test(`It should return the rule selector because the replaced parent is whitelisted.`, () => {
     const ruleSelector = `.some-selector`;
     const ruleParentSelectors = [`.some-other-replaced-selector`];
     const filters = [{
@@ -62,6 +59,6 @@ describe(`filterSelector()`, () => {
     }];
 
     expect(filterSelector({ ruleSelector, ruleParentSelectors, filters }))
-      .to.equal(ruleSelector);
+      .toBe(ruleSelector);
   });
 });
