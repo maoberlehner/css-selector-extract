@@ -2,6 +2,8 @@ import * as postcss from 'postcss';
 
 import filterSelector = require('./filter-selector');
 
+import { PRESERVE_LINES_END, PRESERVE_LINES_START } from '../const';
+
 import { ISelectorFilter } from '../interfaces/ISelectorFilter';
 
 /**
@@ -30,7 +32,7 @@ export = function postcssSelectorExtract(filters: ISelectorFilter[]|string[] = [
 
           rule.cloneBefore({
             type: `comment`,
-            text: `START preserve lines${'\n'.repeat(ruleLines - 1)}preserve lines END`,
+            text: `${PRESERVE_LINES_START}${'\n'.repeat(ruleLines - 1)}${PRESERVE_LINES_END}`,
             raws: Object.assign(rule.raws, { left: ' ', right: ' ' }),
           });
         }
