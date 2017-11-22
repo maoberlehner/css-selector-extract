@@ -13,7 +13,7 @@
     "watch": "npm run clean && tsc -w",
     "clean": "rimraf dist",
     "lint": "tslint src/**/*.ts",
-    "test": "jest test/",
+    "test": "jest",
     "prepublishOnly": "npm run build"
   },
   "repository": {
