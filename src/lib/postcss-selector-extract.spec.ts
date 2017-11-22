@@ -1,4 +1,4 @@
-import postcssSelectorExtract = require('../../src/lib/postcss-selector-extract');
+import postcssSelectorExtract = require('./postcss-selector-extract');
 
 describe(`postcssSelectorExtract()`, () => {
   test(`It should be a function.`, () => {

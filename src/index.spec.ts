@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as postcssSyntax from 'postcss-scss';
 
-import cssSelectorExtract, { process, processSync } from '../src';
+import cssSelectorExtract, { process, processSync } from './';
 
 describe(`cssSelectorExtract`, () => {
   const css = fs.readFileSync(`test/css/test.css`, { encoding: `utf8` });

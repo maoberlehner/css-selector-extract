@@ -1,4 +1,4 @@
-import filterSelector = require('../../src/lib/filter-selector');
+import filterSelector = require('./filter-selector');
 
 describe(`filterSelector()`, () => {
   test(`It should be a function.`, () => {
@@ -7,7 +7,7 @@ describe(`filterSelector()`, () => {
 
   test(`It should return a empty selector because the rule selector is not whitelisted.`, () => {
     const ruleSelector = `.some-selector`;
-    const ruleParentSelectors = [];
+    const ruleParentSelectors: any[] = [];
     const filters = [`.some-other-selector`];
 
     expect(filterSelector({ ruleSelector, ruleParentSelectors, filters }))
@@ -16,7 +16,7 @@ describe(`filterSelector()`, () => {
 
   test(`It should return the rule selector because it is whitelisted.`, () => {
     const ruleSelector = `.some-selector`;
-    const ruleParentSelectors = [];
+    const ruleParentSelectors: any[] = [];
     const filters = [`.some-selector`];
 
     expect(filterSelector({ ruleSelector, ruleParentSelectors, filters }))
@@ -25,7 +25,7 @@ describe(`filterSelector()`, () => {
 
   test(`It should return the rule selector because it is whitelisted (RegEx).`, () => {
     const ruleSelector = `.some-selector`;
-    const ruleParentSelectors = [];
+    const ruleParentSelectors: any[] = [];
     const filters = [/\.some-selector/];
 
     expect(filterSelector({ ruleSelector, ruleParentSelectors, filters }))
