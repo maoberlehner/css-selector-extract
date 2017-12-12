@@ -1,5 +1,7 @@
 # css-selector-extract
 [![Build Status](https://travis-ci.org/maoberlehner/css-selector-extract.svg?branch=master)](https://travis-ci.org/maoberlehner/css-selector-extract)
+[![Coverage Status](https://coveralls.io/repos/github/maoberlehner/css-selector-extract/badge.svg?branch=master)](https://coveralls.io/github/maoberlehner/css-selector-extract?branch=master)
+[![GitHub stars](https://img.shields.io/github/stars/maoberlehner/css-selector-extract.svg?style=social&label=Star)](https://github.com/maoberlehner/css-selector-extract)
 
 With selector extracting, it is possible to extract certain CSS selectors (RegEx can be used to match selectors) from CSS code. This is especially useful if you want to extract only a few CSS classes from a huge library or framework.
 
