@@ -1,4 +1,6 @@
 # css-selector-extract
+[![Patreon](https://img.shields.io/badge/patreon-donate-blue.svg)](https://www.patreon.com/maoberlehner)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://paypal.me/maoberlehner)
 [![Build Status](https://travis-ci.org/maoberlehner/css-selector-extract.svg?branch=master)](https://travis-ci.org/maoberlehner/css-selector-extract)
 [![Coverage Status](https://coveralls.io/repos/github/maoberlehner/css-selector-extract/badge.svg?branch=master)](https://coveralls.io/github/maoberlehner/css-selector-extract?branch=master)
 [![GitHub stars](https://img.shields.io/github/stars/maoberlehner/css-selector-extract.svg?style=social&label=Star)](https://github.com/maoberlehner/css-selector-extract)
@@ -167,7 +169,8 @@ npm test
 Markus Oberlehner  
 Website: https://markus.oberlehner.net  
 Twitter: https://twitter.com/MaOberlehner  
-PayPal.me: https://paypal.me/maoberlehner
+PayPal.me: https://paypal.me/maoberlehner  
+Patreon: https://www.patreon.com/maoberlehner
 
 ### License
 MIT
