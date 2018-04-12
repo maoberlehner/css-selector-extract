@@ -1,4 +1,5 @@
 # css-selector-extract
+
 [![Patreon](https://img.shields.io/badge/patreon-donate-blue.svg)](https://www.patreon.com/maoberlehner)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://paypal.me/maoberlehner)
 [![Build Status](https://travis-ci.org/maoberlehner/css-selector-extract.svg?branch=master)](https://travis-ci.org/maoberlehner/css-selector-extract)
@@ -8,6 +9,7 @@
 With selector extracting, it is possible to extract certain CSS selectors (RegEx can be used to match selectors) from CSS code. This is especially useful if you want to extract only a few CSS classes from a huge library or framework.
 
 ## Demos
+
 ```js
 const cssSelectorExtract = require('css-selector-extract');
 
@@ -29,6 +31,7 @@ console.log(extractedCss); // Outputs: `.btn { }`.
 ```
 
 ### Rename extracted selectors
+
 ```js
 const cssSelectorExtract = require('css-selector-extract');
 
@@ -47,7 +50,9 @@ cssSelectorExtract.process(options).then((extractedCss) => {
 ```
 
 ### RegEx
+
 #### Filter selectors
+
 ```js
 const cssSelectorExtract = require('css-selector-extract');
 
@@ -62,6 +67,7 @@ cssSelectorExtract.process(options).then((extractedCss) => {
 ```
 
 #### Replace selectors
+
 ```js
 const cssSelectorExtract = require('css-selector-extract');
 
@@ -76,6 +82,7 @@ cssSelectorExtract.process(options).then((extractedCss) => {
 ```
 
 ### Usage with syntaxes other than pure CSS
+
 Install the corresponding postcss syntax plugin (e.g. [postcss-scss](https://www.npmjs.com/package/postcss-scss) or [postcss-less](https://www.npmjs.com/package/postcss-less)).
 
 ```js
@@ -94,6 +101,7 @@ cssSelectorExtract.process(options).then((extractedCss) => {
 ```
 
 ### Preserve lines
+
 Usually `css-selector-extract` removes all nodes which do not match the given selectors. However under some circumstances it might be useful to preserve the original line numbers (e.g. to keep source map references intact).
 
 ```js
@@ -113,6 +121,7 @@ cssSelectorExtract.process(options).then((extractedCss) => {
 ```
 
 ### ES2015 named exports
+
 ```js
 import { process, processSync } from 'css-selector-extract';
 
@@ -134,6 +143,7 @@ console.log(extractedCss); // Outputs: `.btn { }`.
 ```
 
 ## Upgrade from 2.x.x to 3.x.x
+
 With version 3.0.0 css-selector-extract takes an object as it's only parameter.
 
 ```js
@@ -157,15 +167,19 @@ cssSelectorExtract.processSync(css, selectorFilters, postcssScss);
 ```
 
 ## Development
+
 See [CONTRIBUTING.md](https://github.com/maoberlehner/css-selector-extract/blob/master/CONTRIBUTING.md)
 
 ### Testing
+
 ```bash
 npm test
 ```
 
 ## About
+
 ### Author
+
 Markus Oberlehner  
 Website: https://markus.oberlehner.net  
 Twitter: https://twitter.com/MaOberlehner  
@@ -173,4 +187,5 @@ PayPal.me: https://paypal.me/maoberlehner
 Patreon: https://www.patreon.com/maoberlehner
 
 ### License
+
 MIT
