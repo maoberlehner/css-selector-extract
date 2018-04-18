@@ -9,15 +9,41 @@
   "homepage": "https://github.com/maoberlehner/css-selector-extract",
   "license": "MIT",
   "scripts": {
-    "build": "npm run clean && tsc",
-    "watch": "npm run clean && tsc -w",
+    "prescripts": "npm run clean",
+    "scripts:umd": "rollup --config --output.format umd --name css-selector-extract --output.file dist/index.js src/index.js",
+    "scripts:es": "rollup --config --output.format es --name css-selector-extract --output.file dist/index.esm.js src/index.js",
+    "scripts:minify": "uglifyjs --compress --mangle --comments --output dist/index.min.js dist/index.js && uglifyjs --compress --mangle --comments --output dist/index.esm.min.js dist/index.esm.js",
+    "scripts": "npm run scripts:umd && npm run scripts:es && npm run scripts:minify",
     "clean": "rimraf dist",
-    "lint": "tslint src/**/*.ts",
+    "lint:scripts": "eslint --ignore-path .gitignore .",
+    "lint": "npm run lint:scripts",
     "coverage": "jest --coverage --maxWorkers=4",
     "coveralls": "npm run coverage && cat coverage/lcov.info | coveralls",
     "test": "jest",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run scripts"
   },
+  "dependencies": {
+    "postcss": "^6.0.14"
+  },
+  "devDependencies": {
+    "@avalanche/eslint-config": "^2.0.0",
+    "@babel/core": "^7.0.0-beta.44",
+    "@babel/preset-env": "^7.0.0-beta.44",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^22.4.3",
+    "bootstrap": "4.0.0-alpha.6",
+    "coveralls": "^3.0.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-import": "^2.11.0",
+    "jest": "^21.2.1",
+    "postcss-scss": "^1.0.2",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.58.0",
+    "rollup-plugin-babel": "^4.0.0-beta.4",
+    "uglify-es": "^3.3.9"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/maoberlehner/css-selector-extract"
@@ -25,32 +51,7 @@
   "bugs": {
     "url": "https://github.com/maoberlehner/css-selector-extract/issues"
   },
-  "dependencies": {
-    "postcss": "^6.0.14"
-  },
-  "devDependencies": {
-    "@types/jest": "^21.1.8",
-    "@types/node": "^8.0.58",
-    "bootstrap": "4.0.0-alpha.6",
-    "coveralls": "^3.0.0",
-    "jest": "^21.2.1",
-    "postcss-scss": "^1.0.2",
-    "rimraf": "^2.6.2",
-    "ts-jest": "^21.2.4",
-    "tslint": "^5.8.0",
-    "typescript": "^2.6.2"
-  },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
-    "transform": {
-      "^.+\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$",
-    "mapCoverage": true
-  }
+  "browserslist": [
+    "last 2 versions"
+  ]
 }

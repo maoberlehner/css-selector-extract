@@ -1,17 +1,13 @@
 import * as fs from 'fs';
 import * as postcssSyntax from 'postcss-scss';
 
-import cssSelectorExtract, { process, processSync } from './';
+import { process, processSync } from './';
 
 describe(`cssSelectorExtract`, () => {
   const css = fs.readFileSync(`test/css/test.css`, { encoding: `utf8` });
   const scss = fs.readFileSync(`test/css/test.scss`, { encoding: `utf8` });
   const scssSyntaxTest = fs.readFileSync(`test/css/scss-syntax-test.scss`, { encoding: `utf8` });
   const scssPreserveLinesTest = fs.readFileSync(`test/css/preserve-lines-test.scss`, { encoding: `utf8` });
-
-  test(`It should be an object.`, () => {
-    expect(typeof cssSelectorExtract).toBe(`object`);
-  });
 
   describe(`process()`, () => {
     test(`It should be a function.`, () => {

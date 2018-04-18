@@ -4,7 +4,7 @@ node_js:
   - "7"
   - "node"
 script:
-  - npm run build
+  - npm run scripts
   - npm run lint
   - npm test -- --maxWorkers=4
   - npm run coveralls
