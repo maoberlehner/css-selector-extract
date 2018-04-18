@@ -1,13 +1,11 @@
-import { IFilterOptions } from '../interfaces/IFilterOptions';
-
 /**
  * Check if a selector should be whitelisted and / or replaced.
  */
-export = function filterSelector({
+export default function filterSelector({
   ruleSelector,
   ruleParentSelectors,
   filters,
-}: IFilterOptions) {
+}) {
   let newSelector = ``;
 
   filters.some((selectorFilter) => {
@@ -16,10 +14,12 @@ export = function filterSelector({
     const parentComparisonSelector = replacementSelector || selector;
 
     const selectorsAreEqual = selector === ruleSelector;
-    const parentSelectorIsEqual = ruleParentSelectors.reduce((bool: boolean, ruleParentSelector: string) => {
-      return parentComparisonSelector instanceof RegExp ?
+    const parentSelectorIsEqual = ruleParentSelectors.reduce((bool, ruleParentSelector) => {
+      const result = parentComparisonSelector instanceof RegExp ?
         parentComparisonSelector.test(ruleParentSelector) :
         ruleParentSelector === parentComparisonSelector;
+
+      return result;
     }, false);
     const selectorsMatch = selector instanceof RegExp && selector.test(ruleSelector);
 
@@ -38,4 +38,4 @@ export = function filterSelector({
   });
 
   return newSelector;
-};
+}
