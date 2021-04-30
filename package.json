@@ -23,7 +23,7 @@
     "prepublishOnly": "npm run scripts"
   },
   "dependencies": {
-    "postcss": "^6.0.21"
+    "postcss": "^8.2.13"
   },
   "devDependencies": {
     "@avalanche/eslint-config": "^2.0.0",
